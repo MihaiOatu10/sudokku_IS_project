@@ -6,6 +6,8 @@
 #include <cstddef>
 #include <string_view>
 
+#include "SudokuLogic/EDifficulty.h"
+
 namespace sudoku::gui
 {
 
@@ -97,5 +99,25 @@ inline constexpr std::array kDigitDoodles{
     DigitDoodle{'3', {130.f, 605.f}, sf::degrees(-12.f), kPastelSky},
     DigitDoodle{'2', {330.f, 660.f}, sf::degrees(9.f), kPastelPink},
 };
+
+inline constexpr std::array kAllDifficulties{EDifficulty::Easy, EDifficulty::Medium, EDifficulty::Hard, EDifficulty::Expert};
+
+inline constexpr float kTitleFontSize = 80.f;
+inline constexpr float kTitleOutlineThickness = 3.f;
+inline constexpr float kTitleY = 50.f;
+inline constexpr float kTitleSpacing = 60.f;
+
+inline constexpr float kButtonWidth = 200.f;
+inline constexpr float kButtonHeight = 50.f;
+inline constexpr float kButtonSpacing = 20.f;
+inline constexpr float kButtonStartY = 200.f;
+
+inline constexpr sf::Color kTitleOutlineColor{50, 50, 50};
+
+inline constexpr std::array kTitleColors{kPastelPink, kPastelSky, kPastelMint, kPastelPeach, kPastelLavender, kPastelPink};
+
+inline constexpr std::array kTitleRotations{-10.f, 10.f, -10.f, 10.f, -10.f, 10.f};
+
+inline constexpr std::string_view kTitleText = "SUDOKU";
 
 }

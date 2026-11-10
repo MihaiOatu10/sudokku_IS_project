@@ -1,28 +1,28 @@
 #pragma once
-
 #include "Background.h"
-#include "Button.h"
-
+#include "MenuScreen.h"
+#include "SudokuLogic/IMenu.h"
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 namespace sudoku::gui
 {
-
 class Application
 {
-public:
+  public:
     Application();
-
     void Run();
 
-private:
-    void HandleEvents();
-    void Draw();
+  private:
+    void ProcessEvents();
+    void Render();
+    void HandleMouseMoved(sf::Vector2f mousePosition);
+    void HandleMouseButtonPressed(sf::Vector2f mousePosition);
 
     sf::RenderWindow m_window;
     sf::Font m_font;
     Background m_background;
-    Button m_testButton;
+    std::unique_ptr<IMenu> m_menu;
+    MenuScreen m_menuScreen;
 };
-
-}
+} 
