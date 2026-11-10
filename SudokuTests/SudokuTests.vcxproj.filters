@@ -4,6 +4,9 @@
     <Filter Include="Tests">
       <UniqueIdentifier>{20B48101-3223-4E46-9324-26400FC2818A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mocks">
+      <UniqueIdentifier>{D7EF2985-5A64-4CE2-9FB3-9A9B23F3A5C1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GoogleTest">
       <UniqueIdentifier>{A904E6DB-917D-476C-81E0-5375C79F9E0B}</UniqueIdentifier>
     </Filter>
@@ -15,6 +18,9 @@
     <ClCompile Include="MenuTests.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="MenuListenerTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
     <ClCompile Include="..\external\googletest\googletest\src\gtest-all.cc">
       <Filter>GoogleTest</Filter>
     </ClCompile>
@@ -24,5 +30,10 @@
     <ClCompile Include="..\external\googletest\googlemock\src\gmock_main.cc">
       <Filter>GoogleTest</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mocks\MockMenuListener.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

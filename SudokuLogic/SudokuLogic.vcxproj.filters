@@ -15,6 +15,9 @@
     <ClInclude Include="include\SudokuLogic\IMenu.h">
       <Filter>API</Filter>
     </ClInclude>
+    <ClInclude Include="include\SudokuLogic\IMenuListener.h">
+      <Filter>API</Filter>
+    </ClInclude>
     <ClInclude Include="src\Menu.h">
       <Filter>Implementation</Filter>
     </ClInclude>
