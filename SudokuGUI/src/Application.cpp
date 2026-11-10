@@ -24,9 +24,15 @@ sf::Font LoadFont()
 Application::Application()
     : m_window(sf::VideoMode({kWindowWidth, kWindowHeight}), "Sudoku"), m_font(LoadFont()),
       m_background(sf::Vector2f(static_cast<float>(kWindowWidth), static_cast<float>(kWindowHeight)), m_font),
-      m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font)
+      m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font), m_currentScreen(m_menu->GetCurrentScreen())
 {
     m_window.setFramerateLimit(kFrameRateLimit);
+    m_menu->AddListener(this);
+}
+
+Application::~Application()
+{
+    m_menu->RemoveListener(this);
 }
 
 void Application::Run()
@@ -36,6 +42,15 @@ void Application::Run()
         ProcessEvents();
         Render();
     }
+}
+
+void Application::OnDifficultySelected(EDifficulty difficulty) {}
+
+void Application::OnPlayUnlocked() {}
+
+void Application::OnScreenChanged(EScreen screen)
+{
+    m_currentScreen = screen;
 }
 
 void Application::ProcessEvents()
@@ -62,19 +77,28 @@ void Application::ProcessEvents()
 
 void Application::HandleMouseMoved(sf::Vector2f mousePosition)
 {
-    m_menuScreen.HandleMouseMove(mousePosition);
+    if (m_currentScreen == EScreen::MainMenu)
+    {
+        m_menuScreen.HandleMouseMove(mousePosition);
+    }
 }
 
 void Application::HandleMouseButtonPressed(sf::Vector2f mousePosition)
 {
-    m_menuScreen.HandleClick(mousePosition);
+    if (m_currentScreen == EScreen::MainMenu)
+    {
+        m_menuScreen.HandleClick(mousePosition);
+    }
 }
 
 void Application::Render()
 {
     m_window.clear();
     m_background.Draw(m_window);
-    m_menuScreen.Draw(m_window);
+    if (m_currentScreen == EScreen::MainMenu)
+    {
+        m_menuScreen.Draw(m_window);
+    }
     m_window.display();
 }
 } 
