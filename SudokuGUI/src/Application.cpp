@@ -1,17 +1,31 @@
 #include "Application.h"
 
+#include "Theme.h"
+
+#include <stdexcept>
+#include <string>
+
 namespace sudoku::gui
 {
 
 namespace
 {
-constexpr unsigned kWindowWidth = 1000;
-constexpr unsigned kWindowHeight = 700;
 constexpr unsigned kFrameRateLimit = 60;
-const sf::Color kBackgroundColor{255, 248, 231};
+
+sf::Font LoadFont()
+{
+    sf::Font font;
+    if (!font.openFromFile(kFontPath))
+    {
+        throw std::runtime_error("Could not load the font from " + std::string(kFontPath));
+    }
+    return font;
+}
 }
 
-Application::Application() : m_window(sf::VideoMode({kWindowWidth, kWindowHeight}), "Sudoku")
+Application::Application()
+    : m_window(sf::VideoMode({kWindowWidth, kWindowHeight}), "Sudoku"), m_font(LoadFont()),
+      m_background(sf::Vector2f(m_window.getSize()), m_font)
 {
     m_window.setFramerateLimit(kFrameRateLimit);
 }
@@ -38,7 +52,8 @@ void Application::HandleEvents()
 
 void Application::Draw()
 {
-    m_window.clear(kBackgroundColor);
+    m_window.clear();
+    m_background.Draw(m_window);
     m_window.display();
 }
 

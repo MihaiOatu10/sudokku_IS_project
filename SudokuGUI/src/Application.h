@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Background.h"
+
 #include <SFML/Graphics.hpp>
 
 namespace sudoku::gui
@@ -17,6 +19,8 @@ private:
     void Draw();
 
     sf::RenderWindow m_window;
+    sf::Font m_font;
+    Background m_background;
 };
 
 }

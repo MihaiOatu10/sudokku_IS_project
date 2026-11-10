@@ -31,6 +31,7 @@
   <PropertyGroup>
     <SfmlDirectory>$(MSBuildThisFileDirectory)..\external\SFML\</SfmlDirectory>
     <SfmlSuffix Condition="'$(Configuration)'=='Debug'">-d</SfmlSuffix>
+    <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -43,15 +44,19 @@
       <AdditionalDependencies>sfml-graphics$(SfmlSuffix).lib;sfml-window$(SfmlSuffix).lib;sfml-system$(SfmlSuffix).lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d /q "$(SfmlDirectory)bin\*.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d /q "$(SfmlDirectory)bin\*.dll" "$(OutDir)"
+xcopy /y /d /e /i /q "$(ProjectDir)assets" "$(OutDir)assets"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Background.h" />
+    <ClInclude Include="src\Theme.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\Background.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SudokuLogic\SudokuLogic.vcxproj">
