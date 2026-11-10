@@ -1,9 +1,10 @@
 #pragma once
 #include "Background.h"
 #include "MenuScreen.h"
+#include "SudokuLogic/EDifficulty.h"
+#include "SudokuLogic/EScreen.h"
 #include "SudokuLogic/IMenu.h"
 #include "SudokuLogic/IMenuListener.h"
-#include "SudokuLogic/EScreen.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
 
@@ -22,9 +23,10 @@ class Application : public IMenuListener
 
   private:
     void ProcessEvents();
+    void HandleMouseEvent(const sf::Event& event);
     void Render();
-    void HandleMouseMoved(sf::Vector2f mousePosition);
-    void HandleMouseButtonPressed(sf::Vector2f mousePosition);
+    void Draw();
+    bool IsMainMenuShown() const;
 
     sf::RenderWindow m_window;
     sf::Font m_font;
@@ -33,4 +35,4 @@ class Application : public IMenuListener
     MenuScreen m_menuScreen;
     EScreen m_currentScreen;
 };
-} 
+}

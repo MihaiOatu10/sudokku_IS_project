@@ -85,7 +85,7 @@ void MenuScreen::OnPlayUnlocked()
     m_playButton.SetEnabled(true);
 }
 
-void MenuScreen::OnScreenChanged(EScreen screen) {}
+void MenuScreen::OnScreenChanged(EScreen) {}
 
 void MenuScreen::InitializeTitle(const sf::Font& font)
 {

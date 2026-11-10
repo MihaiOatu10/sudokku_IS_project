@@ -44,7 +44,7 @@ void Application::Run()
     }
 }
 
-void Application::OnDifficultySelected(EDifficulty difficulty) {}
+void Application::OnDifficultySelected(EDifficulty) {}
 
 void Application::OnPlayUnlocked() {}
 
@@ -61,44 +61,46 @@ void Application::ProcessEvents()
         {
             m_window.close();
         }
-        else if (const auto* mouseMove = event->getIf<sf::Event::MouseMoved>())
+        else if (IsMainMenuShown())
         {
-            HandleMouseMoved(m_window.mapPixelToCoords(mouseMove->position));
-        }
-        else if (const auto* mouseButton = event->getIf<sf::Event::MouseButtonPressed>())
-        {
-            if (mouseButton->button == sf::Mouse::Button::Left)
-            {
-                HandleMouseButtonPressed(m_window.mapPixelToCoords(mouseButton->position));
-            }
+            HandleMouseEvent(*event);
         }
     }
 }
 
-void Application::HandleMouseMoved(sf::Vector2f mousePosition)
+void Application::HandleMouseEvent(const sf::Event& event)
 {
-    if (m_currentScreen == EScreen::MainMenu)
+    if (const auto* mouseMove = event.getIf<sf::Event::MouseMoved>())
     {
-        m_menuScreen.HandleMouseMove(mousePosition);
+        m_menuScreen.HandleMouseMove(m_window.mapPixelToCoords(mouseMove->position));
     }
-}
-
-void Application::HandleMouseButtonPressed(sf::Vector2f mousePosition)
-{
-    if (m_currentScreen == EScreen::MainMenu)
+    else if (const auto* mouseButton = event.getIf<sf::Event::MouseButtonPressed>())
     {
-        m_menuScreen.HandleClick(mousePosition);
+        if (mouseButton->button == sf::Mouse::Button::Left)
+        {
+            m_menuScreen.HandleClick(m_window.mapPixelToCoords(mouseButton->position));
+        }
     }
 }
 
 void Application::Render()
 {
     m_window.clear();
+    Draw();
+    m_window.display();
+}
+
+void Application::Draw()
+{
     m_background.Draw(m_window);
-    if (m_currentScreen == EScreen::MainMenu)
+    if (IsMainMenuShown())
     {
         m_menuScreen.Draw(m_window);
     }
-    m_window.display();
 }
-} 
+
+bool Application::IsMainMenuShown() const
+{
+    return m_currentScreen == EScreen::MainMenu;
+}
+}
