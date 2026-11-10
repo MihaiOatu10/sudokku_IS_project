@@ -30,9 +30,12 @@
   </ImportGroup>
   <ItemGroup>
     <ClInclude Include="include\SudokuLogic\EDifficulty.h" />
+    <ClInclude Include="include\SudokuLogic\IMenu.h" />
+    <ClInclude Include="src\Menu.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EDifficulty.cpp" />
+    <ClCompile Include="src\Menu.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

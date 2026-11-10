@@ -41,6 +41,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DifficultyTests.cpp" />
+    <ClCompile Include="MenuTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\external\googletest\googletest\src\gtest-all.cc" />

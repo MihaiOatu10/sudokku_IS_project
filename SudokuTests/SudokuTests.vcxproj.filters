@@ -12,6 +12,9 @@
     <ClCompile Include="DifficultyTests.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="MenuTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
     <ClCompile Include="..\external\googletest\googletest\src\gtest-all.cc">
       <Filter>GoogleTest</Filter>
     </ClCompile>
