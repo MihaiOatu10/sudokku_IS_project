@@ -120,4 +120,14 @@ inline constexpr std::array kTitleRotations{-10.f, 10.f, -10.f, 10.f, -10.f, 10.
 
 inline constexpr std::string_view kTitleText = "SUDOKU";
 
+inline constexpr float kPlayButtonWidth = 250.f;
+inline constexpr float kPlayButtonHeight = 60.f;
+inline constexpr float kPlayButtonMargin = 40.f;
+inline constexpr float kPromptFontSize = 20.f;
+inline constexpr float kPromptMargin = 15.f;
+
+inline constexpr sf::Color kPlayButtonColor{152, 251, 152};
+inline constexpr sf::Color kPromptTextColor{100, 100, 100};
+
+inline constexpr std::string_view kPromptMessage = "Pick a level to start!";
 }

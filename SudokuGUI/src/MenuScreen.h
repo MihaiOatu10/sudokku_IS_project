@@ -28,10 +28,14 @@ class MenuScreen : public IMenuListener
   private:
     void InitializeTitle(const sf::Font& font);
     void InitializeDifficultyButtons(const sf::Font& font);
+    void InitializePromptText(const sf::Font& font);
     std::string GetDifficultyName(EDifficulty difficulty) const;
 
     IMenu& m_menu;
     std::vector<sf::Text> m_titleLetters;
     std::vector<std::pair<EDifficulty, Button>> m_difficultyButtons;
+    Button m_playButton;
+    sf::Text m_promptText;
+    bool m_isPlayUnlocked;
 };
 } 

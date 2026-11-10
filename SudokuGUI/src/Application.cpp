@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "Theme.h"
+#include <SFML/Window/Event.hpp>
 #include <stdexcept>
 #include <string>
 
@@ -18,7 +19,7 @@ sf::Font LoadFont()
     }
     return font;
 }
-} 
+}
 
 Application::Application()
     : m_window(sf::VideoMode({kWindowWidth, kWindowHeight}), "Sudoku"), m_font(LoadFont()),
