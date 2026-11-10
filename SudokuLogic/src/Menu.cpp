@@ -51,6 +51,23 @@ bool Menu::IsPlayUnlocked() const
     return m_selectedDifficulty.has_value();
 }
 
+void Menu::Play()
+{
+    if (!IsPlayUnlocked() || m_currentScreen != EScreen::MainMenu)
+    {
+        return;
+    }
+
+    m_currentScreen = EScreen::Game;
+
+    NotifyListeners([](IMenuListener& listener) { listener.OnScreenChanged(EScreen::Game); });
+}
+
+EScreen Menu::GetCurrentScreen() const
+{
+    return m_currentScreen;
+}
+
 void Menu::NotifyListeners(const std::function<void(IMenuListener&)>& notification)
 {
     for (IMenuListener* listener : m_listeners)

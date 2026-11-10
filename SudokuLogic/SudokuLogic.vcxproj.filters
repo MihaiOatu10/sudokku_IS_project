@@ -12,6 +12,9 @@
     <ClInclude Include="include\SudokuLogic\EDifficulty.h">
       <Filter>API</Filter>
     </ClInclude>
+    <ClInclude Include="include\SudokuLogic\EScreen.h">
+      <Filter>API</Filter>
+    </ClInclude>
     <ClInclude Include="include\SudokuLogic\IMenu.h">
       <Filter>API</Filter>
     </ClInclude>

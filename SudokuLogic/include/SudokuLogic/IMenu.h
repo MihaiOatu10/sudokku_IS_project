@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SudokuLogic/EDifficulty.h"
+#include "SudokuLogic/EScreen.h"
 #include "SudokuLogic/IMenuListener.h"
 
 #include <memory>
@@ -22,6 +23,9 @@ public:
     virtual void SelectDifficulty(EDifficulty difficulty) = 0;
     virtual std::optional<EDifficulty> GetSelectedDifficulty() const = 0;
     virtual bool IsPlayUnlocked() const = 0;
+
+    virtual void Play() = 0;
+    virtual EScreen GetCurrentScreen() const = 0;
 };
 
 }

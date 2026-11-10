@@ -44,4 +44,22 @@ TEST_F(MenuTests, SelectingAnotherDifficultyReplacesThePreviousOne)
     EXPECT_TRUE(m_menu->IsPlayUnlocked());
 }
 
+TEST_F(MenuTests, ScreenIsMainMenuAtStart)
+{
+    EXPECT_EQ(m_menu->GetCurrentScreen(), EScreen::MainMenu);
+}
+
+TEST_F(MenuTests, PlayWhileLockedStaysInMainMenu)
+{
+    m_menu->Play();
+    EXPECT_EQ(m_menu->GetCurrentScreen(), EScreen::MainMenu);
+}
+
+TEST_F(MenuTests, PlayAfterSelectingADifficultyOpensTheGame)
+{
+    m_menu->SelectDifficulty(EDifficulty::Easy);
+    m_menu->Play();
+    EXPECT_EQ(m_menu->GetCurrentScreen(), EScreen::Game);
+}
+
 }

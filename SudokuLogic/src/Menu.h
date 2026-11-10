@@ -18,11 +18,15 @@ public:
     std::optional<EDifficulty> GetSelectedDifficulty() const override;
     bool IsPlayUnlocked() const override;
 
+    void Play() override;
+    EScreen GetCurrentScreen() const override;
+
 private:
     void NotifyListeners(const std::function<void(IMenuListener&)>& notification);
 
     std::vector<IMenuListener*> m_listeners;
     std::optional<EDifficulty> m_selectedDifficulty;
+    EScreen m_currentScreen = EScreen::MainMenu;
 };
 
 }

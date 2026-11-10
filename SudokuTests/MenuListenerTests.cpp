@@ -88,4 +88,30 @@ TEST_F(MenuListenerTests, AddingANullListenerIsIgnored)
     m_menu->SelectDifficulty(EDifficulty::Easy);
 }
 
+TEST_F(MenuListenerTests, PlayWhileLockedNotifiesNothing)
+{
+    m_menu->Play();
+}
+
+TEST_F(MenuListenerTests, PlayNotifiesTheGameScreen)
+{
+    EXPECT_CALL(m_listener, OnDifficultySelected(EDifficulty::Easy));
+    EXPECT_CALL(m_listener, OnPlayUnlocked());
+    EXPECT_CALL(m_listener, OnScreenChanged(EScreen::Game));
+
+    m_menu->SelectDifficulty(EDifficulty::Easy);
+    m_menu->Play();
+}
+
+TEST_F(MenuListenerTests, PlayingTwiceNotifiesOnlyOnce)
+{
+    EXPECT_CALL(m_listener, OnDifficultySelected(EDifficulty::Easy));
+    EXPECT_CALL(m_listener, OnPlayUnlocked());
+    EXPECT_CALL(m_listener, OnScreenChanged(EScreen::Game)).Times(1);
+
+    m_menu->SelectDifficulty(EDifficulty::Easy);
+    m_menu->Play();
+    m_menu->Play();
+}
+
 }
