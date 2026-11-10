@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Background.h"
+#include "Button.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -21,6 +22,7 @@ private:
     sf::RenderWindow m_window;
     sf::Font m_font;
     Background m_background;
+    Button m_testButton;
 };
 
 }

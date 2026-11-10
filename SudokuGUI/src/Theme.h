@@ -38,6 +38,21 @@ inline constexpr float kStarInnerRadiusRatio = 0.45f;
 inline constexpr sf::Angle kStarStartAngle = sf::degrees(-90.f);
 inline constexpr unsigned kDigitCharacterSize = 52;
 
+inline constexpr sf::Color kInkColor{70, 62, 95};
+inline constexpr sf::Color kDisabledInkColor{160, 160, 165};
+inline constexpr sf::Color kButtonColor = kPastelSky;
+inline constexpr sf::Color kButtonSelectedColor = kPastelPeach;
+inline constexpr sf::Color kButtonDisabledColor{220, 220, 222};
+
+inline constexpr float kButtonCornerRadius = 18.f;
+inline constexpr std::size_t kButtonCornerPointCount = 8;
+inline constexpr float kButtonOutlineThickness = 4.f;
+inline constexpr float kButtonSelectedOutlineThickness = 7.f;
+inline constexpr unsigned kButtonCharacterSize = 32;
+inline constexpr float kButtonHoverScale = 1.06f;
+inline constexpr float kButtonHoverLightenRatio = 0.35f;
+inline constexpr sf::Vector2f kTestButtonSize{220.f, 80.f};
+
 enum class EDoodleShape
 {
     Ring,

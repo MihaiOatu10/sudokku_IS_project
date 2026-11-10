@@ -12,6 +12,9 @@
     <ClInclude Include="src\Background.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="src\Button.h">
+      <Filter>Source</Filter>
+    </ClInclude>
     <ClInclude Include="src\Theme.h">
       <Filter>Source</Filter>
     </ClInclude>
@@ -24,6 +27,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="src\Background.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Button.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

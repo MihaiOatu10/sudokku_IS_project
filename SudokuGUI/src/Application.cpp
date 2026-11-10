@@ -25,7 +25,8 @@ sf::Font LoadFont()
 
 Application::Application()
     : m_window(sf::VideoMode({kWindowWidth, kWindowHeight}), "Sudoku"), m_font(LoadFont()),
-      m_background(sf::Vector2f(m_window.getSize()), m_font)
+      m_background(sf::Vector2f(m_window.getSize()), m_font),
+      m_testButton(m_font, "Test", sf::Vector2f(m_window.getSize()) / 2.f, kTestButtonSize)
 {
     m_window.setFramerateLimit(kFrameRateLimit);
 }
@@ -47,6 +48,10 @@ void Application::HandleEvents()
         {
             m_window.close();
         }
+        else if (const auto* mouseMoved = event->getIf<sf::Event::MouseMoved>())
+        {
+            m_testButton.UpdateHover(m_window.mapPixelToCoords(mouseMoved->position));
+        }
     }
 }
 
@@ -54,6 +59,7 @@ void Application::Draw()
 {
     m_window.clear();
     m_background.Draw(m_window);
+    m_testButton.Draw(m_window);
     m_window.display();
 }
 
