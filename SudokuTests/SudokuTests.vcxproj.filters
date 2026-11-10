@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Tests">
+      <UniqueIdentifier>{20B48101-3223-4E46-9324-26400FC2818A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GoogleTest">
+      <UniqueIdentifier>{A904E6DB-917D-476C-81E0-5375C79F9E0B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DifficultyTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\googletest\googletest\src\gtest-all.cc">
+      <Filter>GoogleTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\googletest\googlemock\src\gmock-all.cc">
+      <Filter>GoogleTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\googletest\googlemock\src\gmock_main.cc">
+      <Filter>GoogleTest</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

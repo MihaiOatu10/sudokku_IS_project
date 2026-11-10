@@ -1,29 +1,22 @@
-# Build output
-build/
-out/
-cmake-build-*/
-CMakeUserPresets.json
-compile_commands.json
-
-# IDEs
+/bin/
+/obj/
+/x64/
 .vs/
 .idea/
 .vscode/
 *.user
 *.suo
+*.aps
+*.VC.db
+*.VC.opendb
+*.ipch
 
-# Compiled files
 *.o
 *.obj
 *.exe
 *.pdb
 *.ilk
-*.lib
-*.a
+*.idb
 
-# Coverage
-*.gcda
-*.gcno
-*.gcov
 coverage/
 Cerinte proiect IS - partea 1 - 2026 (2).pdf

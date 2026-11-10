@@ -34,97 +34,52 @@ A Sudoku game in C++20, split into three projects as the course requires:
 
 ```
 .
-├── CMakeLists.txt              # root: options + the 3 sub-projects
-├── cmake/                      # shared CMake helpers (compiler warnings)
-├── SudokuLogic/
-│   ├── include/SudokuLogic/    # PUBLIC API - the only headers the GUI may include
-│   │   ├── IGame.h             #   main interface + IGame::Produce() factory
-│   │   ├── IGameListener.h     #   Observer interface
-│   │   ├── EDifficulty.h  EGameState.h  EMoveResult.h
-│   │   └── BoardConstants.h
-│   └── src/                    # internal implementation
-│       ├── Game.*              #   implements IGame, notifies listeners (Observer subject)
-│       ├── Board.*             #   9x9 grid + placement rules
-│       ├── IPuzzleGenerator.h  #   generator interface (mocked in tests)
-│       ├── PuzzleGenerator.*   #   random puzzle generation (backtracking)
-│       └── Grid.h              #   type alias for the 9x9 array
-├── SudokuGUI/src/
-│   ├── main.cpp
-│   └── SudokuWindow.*          # SFML window, implements IGameListener
-├── SudokuTests/
-│   ├── BoardTests.cpp  GameTests.cpp  PuzzleGeneratorTests.cpp
-│   ├── TestGrids.h             # known grids shared by the tests
-│   └── mocks/                  # GMock mocks: MockGameListener, MockPuzzleGenerator
-├── docs/uml/                   # PlantUML diagrams
+├── Sudoku.sln                  # open this in Visual Studio
+├── Sudoku.props                # settings shared by the 3 projects (C++20, warnings, output folders)
+├── SudokuLogic/                # static library
+│   ├── include/SudokuLogic/    #   PUBLIC API - the only headers the GUI may include
+│   └── src/                    #   internal implementation
+├── SudokuGUI/                  # SFML 3 window
+│   └── src/
+├── SudokuTests/                # GoogleTest + GoogleMock unit tests
+├── external/                   # SFML 3.0.1 and GoogleTest 1.15.2, already in the repo
 └── .github/                    # CI workflow + PR template
 ```
-
-### How the pieces connect
-
-```
-SudokuGUI ──uses──▶ IGame (API) ◀──implements── Game ──owns──▶ Board
-    │                                            │   └─owns──▶ IPuzzleGenerator ◀── PuzzleGenerator
-    └──implements──▶ IGameListener (API) ◀──notifies──┘
-```
-
-The GUI calls `IGame::Produce()`, registers itself with `AddListener`, sends player moves (`SetCellValue`, `ClearCell`, `StartNewGame`), and reads the board through the getters. `Game` reports every change through `OnNewGameStarted`, `OnCellChanged` and `OnGameStateChanged`.
 
 ---
 
 ## Building
 
 ### Prerequisites
-- **CMake ≥ 3.28**
-- A **C++20** compiler: Visual Studio 2022 (17.8+), GCC 12+ or Clang 15+
-- **Git** and internet access the first time you configure, because CMake downloads **SFML 3.0.1** and **GoogleTest 1.15.2** through `FetchContent`. Nothing has to be installed by hand.
-- Linux only, for SFML:
-  `sudo apt install libxrandr-dev libxcursor-dev libxi-dev libudev-dev libfreetype-dev libgl1-mesa-dev libegl1-mesa-dev`
+- **Visual Studio 2022** with the *Desktop development with C++* workload.
+- Nothing else. SFML and GoogleTest are already in `external/`.
 
 ### Visual Studio 2022
-1. *File → Open → Folder…* and pick the repo folder (VS detects `CMakeLists.txt`).
-2. Wait for "CMake generation finished" (the first time takes a few minutes while SFML downloads).
-3. Choose `SudokuGUI.exe` as the startup item and press F5.
-4. The tests appear in *Test → Test Explorer*.
+1. Open `Sudoku.sln`.
+2. Choose **x64** and **Debug**.
+3. Right click `SudokuGUI` → *Set as Startup Project* → press **F5**.
+4. Run the unit tests from *Test → Test Explorer → Run All*.
 
-### CLion / VS Code (CMake Tools)
-Open the folder; both tools pick up the CMake project automatically.
+The build output goes to `bin/Debug/` or `bin/Release/`.
 
-### Command line
-```bash
-cmake -S . -B build
-cmake --build build --config Debug
-ctest --test-dir build -C Debug --output-on-failure     # run the unit tests
-./build/bin/SudokuGUI                                     # Windows: build\bin\Debug\SudokuGUI.exe
+### Command line (Developer PowerShell)
+```
+msbuild Sudoku.sln -p:Configuration=Debug -p:Platform=x64
+bin\Debug\SudokuTests.exe
+bin\Debug\SudokuGUI.exe
 ```
 
-Useful options:
-
-| Option | Default | Effect |
-|---|---|---|
-| `SUDOKU_BUILD_GUI` | `ON` | Build the SFML GUI (turn off for a fast logic+tests build) |
-| `SUDOKU_BUILD_TESTS` | `ON` | Build the unit tests |
-| `SUDOKU_ENABLE_COVERAGE` | `OFF` | Add `--coverage` to `SudokuLogic` (GCC/Clang) |
-
-### Font
-The GUI uses the first font it finds from: `assets/fonts/main.ttf` (relative to the working directory), Arial or Segoe UI on Windows, DejaVu Sans on Linux. To ship your own font, add `assets/fonts/main.ttf`.
-
-### Controls
-Click a cell or use the **arrow keys** to select it · **1–9** fills it · **Delete/Backspace** clears it · **F1 / F2 / F3** starts a new Easy / Medium / Hard game.
+### Archive for submission
+Zip the repository **without** `bin/`, `obj/` and `.vs/`. `Sudoku.sln` must be inside.
 
 ---
 
 ## Code coverage
 
-**Linux / WSL (gcovr):**
-```bash
-cmake -S . -B build-coverage -DSUDOKU_BUILD_GUI=OFF -DSUDOKU_ENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
-cmake --build build-coverage
-ctest --test-dir build-coverage
-gcovr -r . --filter SudokuLogic/ --html-details coverage/index.html
+Use [OpenCppCoverage](https://github.com/OpenCppCoverage/OpenCppCoverage):
 ```
-
-**Windows:** use [OpenCppCoverage](https://github.com/OpenCppCoverage/OpenCppCoverage):
-`OpenCppCoverage --sources SudokuLogic -- build\bin\Debug\SudokuTests.exe`
+OpenCppCoverage --sources SudokuLogic --export_type html:coverage -- bin\Debug\SudokuTests.exe
+```
 
 ---
 

@@ -6,33 +6,16 @@ on:
   pull_request:
 
 jobs:
-  logic-and-tests:
-    name: Logic + unit tests (${{ matrix.os }})
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Configure
-        run: cmake -S . -B build -DSUDOKU_BUILD_GUI=OFF -DCMAKE_BUILD_TYPE=Release
-
-      - name: Build
-        run: cmake --build build --config Release --parallel
-
-      - name: Run unit tests
-        run: ctest --test-dir build --build-config Release --output-on-failure
-
-  gui:
-    name: GUI build (windows-latest)
+  build-and-test:
+    name: Build + unit tests
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure
-        run: cmake -S . -B build -DSUDOKU_BUILD_TESTS=OFF
+      - uses: microsoft/setup-msbuild@v2
 
       - name: Build
-        run: cmake --build build --config Release --parallel
+        run: msbuild Sudoku.sln -p:Configuration=Release -p:Platform=x64 -m
+
+      - name: Run unit tests
+        run: bin\Release\SudokuTests.exe

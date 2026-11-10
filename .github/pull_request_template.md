@@ -4,7 +4,7 @@
 
 ## Checklist
 
-- [ ] It builds and all unit tests pass locally (`ctest`)
+- [ ] It builds and all unit tests pass locally (Test Explorer)
 - [ ] New/changed logic is covered by unit tests
 - [ ] The GUI contains no game rules (it only calls the `IGame` API)
 - [ ] Names are descriptive and follow `CONTRIBUTING.md`

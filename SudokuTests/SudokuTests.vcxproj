@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{0244F621-D1A0-4940-80B8-1F1F4C8425B0}</ProjectGuid>
+    <RootNamespace>SudokuTests</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseDebugLibraries Condition="'$(Configuration)'=='Debug'">true</UseDebugLibraries>
+    <UseDebugLibraries Condition="'$(Configuration)'=='Release'">false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="..\Sudoku.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <GoogleTestDirectory>$(MSBuildThisFileDirectory)..\external\googletest\</GoogleTestDirectory>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(GoogleTestDirectory)googletest\include;$(GoogleTestDirectory)googletest;$(GoogleTestDirectory)googlemock\include;$(GoogleTestDirectory)googlemock;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="DifficultyTests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\external\googletest\googletest\src\gtest-all.cc" />
+    <ClCompile Include="..\external\googletest\googlemock\src\gmock-all.cc" />
+    <ClCompile Include="..\external\googletest\googlemock\src\gmock_main.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SudokuLogic\SudokuLogic.vcxproj">
+      <Project>{14594955-DFCA-4F23-87CB-6294E9531E17}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>
