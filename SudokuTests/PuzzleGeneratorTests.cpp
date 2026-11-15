@@ -13,6 +13,12 @@ class PuzzleGeneratorTests : public ::testing::Test
 {
 protected:
     static constexpr unsigned kSeed = 7;
+    static constexpr unsigned kOtherSeed = 13;
+
+    static Board CreateEasyPuzzle(unsigned seed)
+    {
+        return PuzzleGenerator(seed).Generate(EDifficulty::Easy);
+    }
 
     static void SetUpTestSuite()
     {
@@ -65,6 +71,16 @@ TEST_F(PuzzleGeneratorTests, PuzzleHasOneSolution)
     {
         EXPECT_EQ(Solver().CountSolutions(puzzle, 2), 1u);
     }
+}
+
+TEST_F(PuzzleGeneratorTests, SameSeedGivesTheSamePuzzle)
+{
+    EXPECT_EQ(GetValues(CreateEasyPuzzle(kSeed)), GetValues(CreateEasyPuzzle(kSeed)));
+}
+
+TEST_F(PuzzleGeneratorTests, DifferentSeedsGiveDifferentPuzzles)
+{
+    EXPECT_NE(GetValues(CreateEasyPuzzle(kSeed)), GetValues(CreateEasyPuzzle(kOtherSeed)));
 }
 
 }
