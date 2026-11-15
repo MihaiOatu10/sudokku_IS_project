@@ -34,10 +34,16 @@
     <ClInclude Include="include\SudokuLogic\IMenu.h" />
     <ClInclude Include="include\SudokuLogic\IMenuListener.h" />
     <ClInclude Include="src\Menu.h" />
+    <ClInclude Include="include\SudokuLogic\BoardConstants.h" />
+    <ClInclude Include="include\SudokuLogic\IGame.h" />
+    <ClInclude Include="src\Board.h" />
+    <ClInclude Include="src\Game.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EDifficulty.cpp" />
     <ClCompile Include="src\Menu.cpp" />
+    <ClCompile Include="src\Board.cpp" />
+    <ClCompile Include="src\Game.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

@@ -1,0 +1,24 @@
+#pragma once
+
+#include "SudokuLogic/BoardConstants.h"
+#include "SudokuLogic/EDifficulty.h"
+
+#include <cstddef>
+#include <memory>
+
+namespace sudoku
+{
+
+class IGame
+{
+public:
+    static std::unique_ptr<IGame> Produce(EDifficulty difficulty);
+
+    virtual ~IGame() = default;
+
+    virtual EDifficulty GetDifficulty() const = 0;
+    virtual int GetCellValue(std::size_t row, std::size_t column) const = 0;
+    virtual bool IsCellGiven(std::size_t row, std::size_t column) const = 0;
+};
+
+}

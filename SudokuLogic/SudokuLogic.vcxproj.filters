@@ -24,12 +24,30 @@
     <ClInclude Include="src\Menu.h">
       <Filter>Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="include\SudokuLogic\BoardConstants.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SudokuLogic\IGame.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Board.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EDifficulty.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="src\Menu.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Board.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>
