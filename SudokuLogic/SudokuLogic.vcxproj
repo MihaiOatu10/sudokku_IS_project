@@ -39,6 +39,8 @@
     <ClInclude Include="src\Board.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Solver.h" />
+    <ClInclude Include="src\IPuzzleGenerator.h" />
+    <ClInclude Include="src\PuzzleGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EDifficulty.cpp" />
@@ -46,6 +48,7 @@
     <ClCompile Include="src\Board.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Solver.cpp" />
+    <ClCompile Include="src\PuzzleGenerator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

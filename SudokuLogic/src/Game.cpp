@@ -1,14 +1,20 @@
 #include "Game.h"
 
+#include "PuzzleGenerator.h"
+
+#include <random>
+
 namespace sudoku
 {
 
 std::unique_ptr<IGame> IGame::Produce(EDifficulty difficulty)
 {
-    return std::make_unique<Game>(difficulty, Board{});
+    PuzzleGenerator puzzleGenerator(std::random_device{}());
+    return std::make_unique<Game>(difficulty, puzzleGenerator);
 }
 
-Game::Game(EDifficulty difficulty, const Board& puzzle) : m_difficulty(difficulty), m_puzzle(puzzle)
+Game::Game(EDifficulty difficulty, IPuzzleGenerator& puzzleGenerator)
+    : m_difficulty(difficulty), m_puzzle(puzzleGenerator.Generate(difficulty))
 {
 }
 

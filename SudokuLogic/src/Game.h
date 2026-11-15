@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Board.h"
+#include "IPuzzleGenerator.h"
 #include "SudokuLogic/IGame.h"
 
 namespace sudoku
@@ -9,7 +10,7 @@ namespace sudoku
 class Game : public IGame
 {
 public:
-    Game(EDifficulty difficulty, const Board& puzzle);
+    Game(EDifficulty difficulty, IPuzzleGenerator& puzzleGenerator);
 
     EDifficulty GetDifficulty() const override;
     int GetCellValue(std::size_t row, std::size_t column) const override;

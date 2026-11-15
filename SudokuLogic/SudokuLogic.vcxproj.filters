@@ -39,6 +39,12 @@
     <ClInclude Include="src\Solver.h">
       <Filter>Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="src\IPuzzleGenerator.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PuzzleGenerator.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EDifficulty.cpp">
@@ -54,6 +60,9 @@
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="src\Solver.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PuzzleGenerator.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>
