@@ -21,6 +21,9 @@
     <ClCompile Include="MenuListenerTests.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="BoardTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
     <ClCompile Include="..\external\googletest\googletest\src\gtest-all.cc">
       <Filter>GoogleTest</Filter>
     </ClCompile>
