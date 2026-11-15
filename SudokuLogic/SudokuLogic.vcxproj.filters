@@ -36,6 +36,9 @@
     <ClInclude Include="src\Game.h">
       <Filter>Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="src\Solver.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EDifficulty.cpp">
@@ -48,6 +51,9 @@
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="src\Game.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Solver.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>

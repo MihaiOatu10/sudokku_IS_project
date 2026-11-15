@@ -38,12 +38,14 @@
     <ClInclude Include="include\SudokuLogic\IGame.h" />
     <ClInclude Include="src\Board.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Solver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EDifficulty.cpp" />
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Board.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Solver.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
