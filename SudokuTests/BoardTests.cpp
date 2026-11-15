@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "helpers/BoardHelpers.h"
 
 #include <gtest/gtest.h>
 
@@ -15,13 +16,7 @@ protected:
 
 TEST_F(BoardTests, NewBoardHasAllCellsEmpty)
 {
-    for (std::size_t row = 0; row < kBoardSize; ++row)
-    {
-        for (std::size_t column = 0; column < kBoardSize; ++column)
-        {
-            EXPECT_TRUE(m_board.IsEmpty(row, column));
-        }
-    }
+    EXPECT_EQ(CountFilledCells(m_board), 0u);
 }
 
 TEST_F(BoardTests, SetValueStoresTheValue)

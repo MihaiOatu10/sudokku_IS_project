@@ -17,6 +17,7 @@ public:
 
     bool Contains(sf::Vector2f point) const;
     void UpdateHover(sf::Vector2f mousePosition);
+    float GetScale() const;
 
     void Draw(sf::RenderTarget& target) const;
 

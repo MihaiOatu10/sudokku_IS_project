@@ -30,23 +30,39 @@
   </ImportGroup>
   <PropertyGroup>
     <GoogleTestDirectory>$(MSBuildThisFileDirectory)..\external\googletest\</GoogleTestDirectory>
+    <SfmlDirectory>$(MSBuildThisFileDirectory)..\external\SFML\</SfmlDirectory>
+    <SfmlSuffix Condition="'$(Configuration)'=='Debug'">-d</SfmlSuffix>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(GoogleTestDirectory)googletest\include;$(GoogleTestDirectory)googletest;$(GoogleTestDirectory)googlemock\include;$(GoogleTestDirectory)googlemock;$(MSBuildThisFileDirectory)..\SudokuLogic\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(GoogleTestDirectory)googletest\include;$(GoogleTestDirectory)googletest;$(GoogleTestDirectory)googlemock\include;$(GoogleTestDirectory)googlemock;$(MSBuildThisFileDirectory)..\SudokuLogic\src;$(MSBuildThisFileDirectory)..\SudokuGUI\src;$(SfmlDirectory)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SfmlDirectory)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics$(SfmlSuffix).lib;sfml-window$(SfmlSuffix).lib;sfml-system$(SfmlSuffix).lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /d /q "$(SfmlDirectory)bin\*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DifficultyTests.cpp" />
     <ClCompile Include="MenuTests.cpp" />
     <ClCompile Include="MenuListenerTests.cpp" />
     <ClCompile Include="BoardTests.cpp" />
+    <ClCompile Include="SolverTests.cpp" />
+    <ClCompile Include="PuzzleGeneratorTests.cpp" />
+    <ClCompile Include="GameTests.cpp" />
+    <ClCompile Include="ButtonTests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\SudokuGUI\src\Button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mocks\MockMenuListener.h" />
+    <ClInclude Include="mocks\MockPuzzleGenerator.h" />
+    <ClInclude Include="helpers\BoardHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\external\googletest\googletest\src\gtest-all.cc" />

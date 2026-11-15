@@ -81,6 +81,11 @@ void Button::UpdateHover(sf::Vector2f mousePosition)
     ApplyStyle();
 }
 
+float Button::GetScale() const
+{
+    return m_shape.getScale().x;
+}
+
 void Button::Draw(sf::RenderTarget& target) const
 {
     target.draw(m_shape);
