@@ -24,7 +24,7 @@ sf::Font LoadFont()
 Application::Application()
     : m_window(sf::VideoMode({kWindowWidth, kWindowHeight}), "Sudoku"), m_font(LoadFont()),
       m_background(sf::Vector2f(static_cast<float>(kWindowWidth), static_cast<float>(kWindowHeight)), m_font),
-      m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font), m_currentScreen(m_menu->GetCurrentScreen())
+      m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font), m_currentScreen(m_menu->GetCurrentScreen()), m_gameScreen(m_font)
 {
     m_window.setFramerateLimit(kFrameRateLimit);
     m_menu->AddListener(this);
@@ -56,30 +56,36 @@ void Application::OnScreenChanged(EScreen screen)
 void Application::ProcessEvents()
 {
     while (const std::optional<sf::Event> event = m_window.pollEvent())
-    {
         if (event->is<sf::Event::Closed>())
-        {
             m_window.close();
-        }
-        else if (IsMainMenuShown())
-        {
+        else
             HandleMouseEvent(*event);
-        }
-    }
 }
 
 void Application::HandleMouseEvent(const sf::Event& event)
 {
     if (const auto* mouseMove = event.getIf<sf::Event::MouseMoved>())
     {
-        m_menuScreen.HandleMouseMove(m_window.mapPixelToCoords(mouseMove->position));
+        HandleMouseMove(m_window.mapPixelToCoords(mouseMove->position));
     }
     else if (const auto* mouseButton = event.getIf<sf::Event::MouseButtonPressed>())
     {
-        if (mouseButton->button == sf::Mouse::Button::Left)
+        if (mouseButton->button == sf::Mouse::Button::Left && IsMainMenuShown())
         {
             m_menuScreen.HandleClick(m_window.mapPixelToCoords(mouseButton->position));
         }
+    }
+}
+
+void Application::HandleMouseMove(sf::Vector2f mousePosition)
+{
+    if (IsMainMenuShown())
+    {
+        m_menuScreen.HandleMouseMove(mousePosition);
+    }
+    else if (m_currentScreen == EScreen::Game)
+    {
+        m_gameScreen.HandleMouseMove(mousePosition);
     }
 }
 

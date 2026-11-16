@@ -25,6 +25,7 @@ class Application : public IMenuListener
   private:
     void ProcessEvents();
     void HandleMouseEvent(const sf::Event& event);
+    void HandleMouseMove(sf::Vector2f mousePosition);
     void Render();
     bool IsMainMenuShown() const;
 

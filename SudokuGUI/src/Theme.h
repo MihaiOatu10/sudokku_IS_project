@@ -135,4 +135,9 @@ inline constexpr float kBoardCellSize = 60.f;
 inline constexpr float kBoardPixelSize = static_cast<float>(kBoardSize) * kBoardCellSize;
 inline constexpr float kThinLineThickness = 2.f;
 inline constexpr float kThickLineThickness = 5.f;
+
+inline constexpr float kPadButtonSize = 65.f;
+inline constexpr float kPadButtonSpacing = 15.f;
+inline constexpr float kPadBoardSpacing = 40.f;
+inline constexpr int kPadColumns = 3;
 } 
