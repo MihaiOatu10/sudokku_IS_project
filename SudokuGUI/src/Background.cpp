@@ -84,7 +84,7 @@ void PlaceDoodle(sf::Transformable& doodle, sf::Vector2f position, sf::Angle rot
     doodle.setPosition(position);
     doodle.setRotation(rotation);
 }
-}
+} 
 
 Background::Background(sf::Vector2f size, const sf::Font& font)
 {
@@ -131,4 +131,4 @@ void Background::AddDigitDoodles(const sf::Font& font)
     }
 }
 
-}
+} 

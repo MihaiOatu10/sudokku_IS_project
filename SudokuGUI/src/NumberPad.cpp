@@ -17,7 +17,8 @@ NumberPad::NumberPad(const sf::Font& font, sf::Vector2f topLeft)
         const int index = value - kMinValue;
         const int row = index / kPadColumns;
         const int column = index % kPadColumns;
-        const sf::Vector2f position{topLeft.x + (static_cast<float>(column) * step) + halfSize, topLeft.y + (static_cast<float>(row) * step) + halfSize};
+        const sf::Vector2f position{topLeft.x + (static_cast<float>(column) * step) + halfSize,
+                                    topLeft.y + (static_cast<float>(row) * step) + halfSize};
         m_buttons.emplace_back(font, std::to_string(value), position, buttonSize);
     }
 }

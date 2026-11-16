@@ -10,12 +10,12 @@ namespace sudoku::gui
 
 class Background
 {
-public:
+  public:
     Background(sf::Vector2f size, const sf::Font& font);
 
     void Draw(sf::RenderTarget& target) const;
 
-private:
+  private:
     void AddRuledLines(sf::Vector2f size);
     void AddShapeDoodles();
     void AddDigitDoodles(const sf::Font& font);
@@ -23,4 +23,4 @@ private:
     std::vector<std::unique_ptr<sf::Drawable>> m_drawables;
 };
 
-}
+} 

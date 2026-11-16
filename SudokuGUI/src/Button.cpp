@@ -18,7 +18,7 @@ constexpr int kMaxColorChannel = std::numeric_limits<std::uint8_t>::max();
 
 sf::ConvexShape CreateRoundedRectangle(sf::Vector2f size, float cornerRadius)
 {
-    const sf::Vector2f cornerCenterOffset = size / 2.f - sf::Vector2f(cornerRadius, cornerRadius);
+    const sf::Vector2f cornerCenterOffset = size / kHalf - sf::Vector2f(cornerRadius, cornerRadius);
     const sf::Angle pointAngleStep = kQuarterTurn / static_cast<float>(kButtonCornerPointCount - 1);
     sf::ConvexShape shape(kCornerDirections.size() * kButtonCornerPointCount);
     std::size_t pointIndex = 0;
@@ -45,11 +45,11 @@ sf::Color Lighten(sf::Color color)
 {
     return {LightenChannel(color.r), LightenChannel(color.g), LightenChannel(color.b), color.a};
 }
-}
+} 
 
 Button::Button(const sf::Font& font, const std::string& label, sf::Vector2f center, sf::Vector2f size)
     : m_shape(CreateRoundedRectangle(size, kButtonCornerRadius)), m_label(font, label, kButtonCharacterSize),
-      m_bounds(center - size / 2.f, size)
+      m_bounds(center - size / kHalf, size)
 {
     m_shape.setPosition(center);
     m_label.setStyle(sf::Text::Bold);
@@ -116,4 +116,4 @@ sf::Color Button::GetBaseFillColor() const
     return m_isSelected ? kButtonSelectedColor : kButtonColor;
 }
 
-}
+} 

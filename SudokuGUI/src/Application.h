@@ -37,4 +37,4 @@ class Application : public IMenuListener
     EScreen m_currentScreen;
     GameScreen m_gameScreen;
 };
-}
+} 

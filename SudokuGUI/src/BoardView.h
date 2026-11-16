@@ -12,7 +12,11 @@ class BoardView
     void Draw(sf::RenderTarget& target) const;
 
   private:
-    sf::RectangleShape m_background;
+    void InitializeBackground(sf::Vector2f topLeft);
+    void InitializeGrid(sf::Vector2f topLeft, float cellSize);
+
+    sf::ConvexShape m_background;
+    sf::ConvexShape m_shadow;
     std::vector<sf::RectangleShape> m_gridLines;
 };
 } 

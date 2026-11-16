@@ -19,12 +19,13 @@ sf::Font LoadFont()
     }
     return font;
 }
-}
+} 
 
 Application::Application()
     : m_window(sf::VideoMode({kWindowWidth, kWindowHeight}), "Sudoku"), m_font(LoadFont()),
       m_background(sf::Vector2f(static_cast<float>(kWindowWidth), static_cast<float>(kWindowHeight)), m_font),
-      m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font), m_currentScreen(m_menu->GetCurrentScreen()), m_gameScreen(m_font)
+      m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font), m_currentScreen(m_menu->GetCurrentScreen()),
+      m_gameScreen(m_font)
 {
     m_window.setFramerateLimit(kFrameRateLimit);
     m_menu->AddListener(this);
@@ -108,4 +109,4 @@ bool Application::IsMainMenuShown() const
 {
     return m_currentScreen == EScreen::MainMenu;
 }
-}
+} 

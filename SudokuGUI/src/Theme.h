@@ -54,7 +54,6 @@ inline constexpr float kButtonSelectedOutlineThickness = 7.f;
 inline constexpr unsigned kButtonCharacterSize = 32;
 inline constexpr float kButtonHoverScale = 1.06f;
 inline constexpr float kButtonHoverLightenRatio = 0.35f;
-inline constexpr sf::Vector2f kTestButtonSize{220.f, 80.f};
 
 enum class EDoodleShape
 {
@@ -113,7 +112,8 @@ inline constexpr float kButtonStartY = 200.f;
 
 inline constexpr sf::Color kTitleOutlineColor{50, 50, 50};
 
-inline constexpr std::array kTitleColors{kPastelPink, kPastelSky, kPastelMint, kPastelPeach, kPastelLavender, kPastelPink};
+inline constexpr std::array kTitleColors{kPastelPink,  kPastelSky,      kPastelMint,
+                                         kPastelPeach, kPastelLavender, kPastelPink};
 
 inline constexpr std::array kTitleRotations{-10.f, 10.f, -10.f, 10.f, -10.f, 10.f};
 
@@ -125,7 +125,6 @@ inline constexpr float kPlayButtonMargin = 40.f;
 inline constexpr float kPromptFontSize = 20.f;
 inline constexpr float kPromptMargin = 15.f;
 
-inline constexpr sf::Color kPlayButtonColor{152, 251, 152};
 inline constexpr sf::Color kPromptTextColor{100, 100, 100};
 
 inline constexpr std::string_view kPromptMessage = "Pick a level to start!";
@@ -138,6 +137,18 @@ inline constexpr float kThickLineThickness = 5.f;
 
 inline constexpr float kPadButtonSize = 65.f;
 inline constexpr float kPadButtonSpacing = 15.f;
-inline constexpr float kPadBoardSpacing = 40.f;
+inline constexpr float kPadBoardSpacing = 60.f;
 inline constexpr int kPadColumns = 3;
+inline constexpr int kPadRows = (kMaxValue - kMinValue + 1) / kPadColumns;
+inline constexpr float kPadWidth =
+    (static_cast<float>(kPadColumns) * kPadButtonSize) + (static_cast<float>(kPadColumns - 1) * kPadButtonSpacing);
+inline constexpr float kPadHeight =
+    (static_cast<float>(kPadRows) * kPadButtonSize) + (static_cast<float>(kPadRows - 1) * kPadButtonSpacing);
+
+inline constexpr unsigned kSmallTitleFontSize = 45;
+inline constexpr float kSmallTitleSpacing = 35.f;
+inline constexpr float kBoardCornerRadius = 8.f;
+inline constexpr float kBoardShadowOffset = 12.f;
+inline constexpr sf::Color kBoardShadowColor{0, 0, 0, 40};
+inline constexpr float kTitlePadSpacing = 20.f;
 } 

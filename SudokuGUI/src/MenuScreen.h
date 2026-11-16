@@ -21,7 +21,7 @@ class MenuScreen : public IMenuListener
     void HandleClick(sf::Vector2f mousePosition);
     void Draw(sf::RenderTarget& target) const;
 
-    void OnDifficultySelected(EDifficulty difficulty) override;
+    void OnDifficultySelected(EDifficulty selectedDifficulty) override;
     void OnPlayUnlocked() override;
     void OnScreenChanged(EScreen screen) override;
 

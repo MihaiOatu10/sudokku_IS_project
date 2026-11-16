@@ -9,7 +9,7 @@ namespace sudoku::gui
 
 class Button
 {
-public:
+  public:
     Button(const sf::Font& font, const std::string& label, sf::Vector2f center, sf::Vector2f size);
 
     void SetEnabled(bool isEnabled);
@@ -21,7 +21,7 @@ public:
 
     void Draw(sf::RenderTarget& target) const;
 
-private:
+  private:
     void ApplyStyle();
     sf::Color GetBaseFillColor() const;
 
@@ -33,4 +33,4 @@ private:
     bool m_isHovered = false;
 };
 
-}
+} 
