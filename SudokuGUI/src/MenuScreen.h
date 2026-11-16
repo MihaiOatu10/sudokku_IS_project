@@ -28,8 +28,8 @@ class MenuScreen : public IMenuListener
   private:
     void InitializeTitle(const sf::Font& font);
     void InitializeDifficultyButtons(const sf::Font& font);
-    void InitializePromptText(const sf::Font& font);
-    std::string GetDifficultyName(EDifficulty difficulty) const;
+    void InitializePromptText();
+    float GetPlayButtonY() const;
 
     IMenu& m_menu;
     std::vector<sf::Text> m_titleLetters;

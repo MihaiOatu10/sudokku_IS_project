@@ -1,5 +1,6 @@
 #pragma once
 #include "Background.h"
+#include "GameScreen.h"
 #include "MenuScreen.h"
 #include "SudokuLogic/EDifficulty.h"
 #include "SudokuLogic/EScreen.h"
@@ -25,7 +26,6 @@ class Application : public IMenuListener
     void ProcessEvents();
     void HandleMouseEvent(const sf::Event& event);
     void Render();
-    void Draw();
     bool IsMainMenuShown() const;
 
     sf::RenderWindow m_window;
@@ -34,5 +34,6 @@ class Application : public IMenuListener
     std::unique_ptr<IMenu> m_menu;
     MenuScreen m_menuScreen;
     EScreen m_currentScreen;
+    GameScreen m_gameScreen;
 };
 }

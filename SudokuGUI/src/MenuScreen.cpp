@@ -4,19 +4,14 @@
 namespace sudoku::gui
 {
 MenuScreen::MenuScreen(IMenu& menu, const sf::Font& font)
-    : m_menu(menu),
-      m_playButton(font, "Play",
-                   sf::Vector2f(kWindowWidth / 2.0f, kButtonStartY +
-                                                         (kAllDifficulties.size() * (kButtonHeight + kButtonSpacing)) +
-                                                         kPlayButtonMargin),
-                   sf::Vector2f(kPlayButtonWidth, kPlayButtonHeight)),
+    : m_menu(menu), m_playButton(font, "Play", sf::Vector2f(kWindowWidth / kHalf, GetPlayButtonY()),sf::Vector2f(kPlayButtonWidth, kPlayButtonHeight)),
       m_promptText(font, std::string(kPromptMessage), static_cast<unsigned int>(kPromptFontSize)),
       m_isPlayUnlocked(m_menu.IsPlayUnlocked())
 {
     InitializeTitle(font);
     InitializeDifficultyButtons(font);
     m_playButton.SetEnabled(m_isPlayUnlocked);
-    InitializePromptText(font);
+    InitializePromptText();
 
     m_menu.AddListener(this);
 }
@@ -89,7 +84,7 @@ void MenuScreen::OnScreenChanged(EScreen) {}
 
 void MenuScreen::InitializeTitle(const sf::Font& font)
 {
-    const float startX = (kWindowWidth - (kTitleText.size() * kTitleSpacing)) / 2.0f;
+    const float startX = (kWindowWidth - (kTitleText.size() * kTitleSpacing)) / kHalf;
 
     for (std::size_t i = 0; i < kTitleText.size(); ++i)
     {
@@ -106,44 +101,30 @@ void MenuScreen::InitializeTitle(const sf::Font& font)
 void MenuScreen::InitializeDifficultyButtons(const sf::Font& font)
 {
     float currentY = kButtonStartY;
-    const float centerX = kWindowWidth / 2.0f;
+    const float centerX = kWindowWidth / kHalf;
 
-    for (const EDifficulty difficulty : kAllDifficulties)
+    for (const EDifficulty difficulty : sudoku::kAllDifficulties)
     {
-        Button btn(font, GetDifficultyName(difficulty), sf::Vector2f(centerX, currentY),
-                   sf::Vector2f(kButtonWidth, kButtonHeight));
+        Button btn(font, std::string(sudoku::GetDifficultyName(difficulty)), sf::Vector2f(centerX, currentY), sf::Vector2f(kButtonWidth, kButtonHeight));
         m_difficultyButtons.emplace_back(difficulty, std::move(btn));
         currentY += kButtonHeight + kButtonSpacing;
     }
 }
 
-void MenuScreen::InitializePromptText(const sf::Font& font)
+void MenuScreen::InitializePromptText()
 {
     m_promptText.setFillColor(kPromptTextColor);
 
     const sf::FloatRect bounds = m_promptText.getLocalBounds();
-    const float textX = (kWindowWidth - bounds.size.x) / 2.0f;
-    const float centerY =
-        kButtonStartY + (kAllDifficulties.size() * (kButtonHeight + kButtonSpacing)) + kPlayButtonMargin;
-    const float textY = centerY + (kPlayButtonHeight / 2.0f) + kPromptMargin;
+    const float textX = (kWindowWidth - bounds.size.x) / kHalf;
+    const float centerY = GetPlayButtonY();
+    const float textY = centerY + (kPlayButtonHeight / kHalf) + kPromptMargin;
 
     m_promptText.setPosition({textX, textY});
 }
 
-std::string MenuScreen::GetDifficultyName(EDifficulty difficulty) const
+float MenuScreen::GetPlayButtonY() const
 {
-    switch (difficulty)
-    {
-    case EDifficulty::Easy:
-        return "Easy";
-    case EDifficulty::Medium:
-        return "Medium";
-    case EDifficulty::Hard:
-        return "Hard";
-    case EDifficulty::Expert:
-        return "Expert";
-    default:
-        return "";
-    }
+    return kButtonStartY + (sudoku::kAllDifficulties.size() * (kButtonHeight + kButtonSpacing)) + kPlayButtonMargin;
 }
 } 

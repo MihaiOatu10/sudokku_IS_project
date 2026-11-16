@@ -6,11 +6,12 @@
 #include <cstddef>
 #include <string_view>
 
+#include "SudokuLogic/BoardConstants.h"
 #include "SudokuLogic/EDifficulty.h"
 
 namespace sudoku::gui
 {
-
+inline constexpr float kHalf = 2.0f;
 inline constexpr unsigned kWindowWidth = 1000;
 inline constexpr unsigned kWindowHeight = 700;
 
@@ -100,8 +101,6 @@ inline constexpr std::array kDigitDoodles{
     DigitDoodle{'2', {330.f, 660.f}, sf::degrees(9.f), kPastelPink},
 };
 
-inline constexpr std::array kAllDifficulties{EDifficulty::Easy, EDifficulty::Medium, EDifficulty::Hard, EDifficulty::Expert};
-
 inline constexpr float kTitleFontSize = 80.f;
 inline constexpr float kTitleOutlineThickness = 3.f;
 inline constexpr float kTitleY = 50.f;
@@ -130,4 +129,10 @@ inline constexpr sf::Color kPlayButtonColor{152, 251, 152};
 inline constexpr sf::Color kPromptTextColor{100, 100, 100};
 
 inline constexpr std::string_view kPromptMessage = "Pick a level to start!";
-}
+
+inline constexpr sf::Color kBoardBackgroundColor{253, 246, 227};
+inline constexpr float kBoardCellSize = 60.f;
+inline constexpr float kBoardPixelSize = static_cast<float>(kBoardSize) * kBoardCellSize;
+inline constexpr float kThinLineThickness = 2.f;
+inline constexpr float kThickLineThickness = 5.f;
+} 

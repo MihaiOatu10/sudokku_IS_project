@@ -86,17 +86,16 @@ void Application::HandleMouseEvent(const sf::Event& event)
 void Application::Render()
 {
     m_window.clear();
-    Draw();
-    m_window.display();
-}
-
-void Application::Draw()
-{
     m_background.Draw(m_window);
-    if (IsMainMenuShown())
+    if (m_currentScreen == EScreen::MainMenu)
     {
         m_menuScreen.Draw(m_window);
     }
+    else if (m_currentScreen == EScreen::Game)
+    {
+        m_gameScreen.Draw(m_window);
+    }
+    m_window.display();
 }
 
 bool Application::IsMainMenuShown() const
