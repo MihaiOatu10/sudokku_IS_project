@@ -1,8 +1,8 @@
 #include "Button.h"
 
+#include "RoundedRectangle.h"
 #include "Theme.h"
 
-#include <array>
 #include <cstdint>
 #include <limits>
 
@@ -11,29 +11,8 @@ namespace sudoku::gui
 
 namespace
 {
-constexpr sf::Angle kQuarterTurn = sf::degrees(90.f);
-constexpr std::array<sf::Vector2f, 4> kCornerDirections{{{1.f, 1.f}, {-1.f, 1.f}, {-1.f, -1.f}, {1.f, -1.f}}};
 constexpr float kNormalScale = 1.f;
 constexpr int kMaxColorChannel = std::numeric_limits<std::uint8_t>::max();
-
-sf::ConvexShape CreateRoundedRectangle(sf::Vector2f size, float cornerRadius)
-{
-    const sf::Vector2f cornerCenterOffset = size / kHalf - sf::Vector2f(cornerRadius, cornerRadius);
-    const sf::Angle pointAngleStep = kQuarterTurn / static_cast<float>(kButtonCornerPointCount - 1);
-    sf::ConvexShape shape(kCornerDirections.size() * kButtonCornerPointCount);
-    std::size_t pointIndex = 0;
-    for (std::size_t corner = 0; corner < kCornerDirections.size(); ++corner)
-    {
-        const sf::Vector2f cornerCenter = cornerCenterOffset.componentWiseMul(kCornerDirections[corner]);
-        const sf::Angle cornerStartAngle = kQuarterTurn * static_cast<float>(corner);
-        for (std::size_t step = 0; step < kButtonCornerPointCount; ++step)
-        {
-            const sf::Angle angle = cornerStartAngle + pointAngleStep * static_cast<float>(step);
-            shape.setPoint(pointIndex++, cornerCenter + sf::Vector2f(cornerRadius, angle));
-        }
-    }
-    return shape;
-}
 
 std::uint8_t LightenChannel(std::uint8_t channel)
 {
@@ -45,7 +24,7 @@ sf::Color Lighten(sf::Color color)
 {
     return {LightenChannel(color.r), LightenChannel(color.g), LightenChannel(color.b), color.a};
 }
-} 
+}
 
 Button::Button(const sf::Font& font, const std::string& label, sf::Vector2f center, sf::Vector2f size)
     : m_shape(CreateRoundedRectangle(size, kButtonCornerRadius)), m_label(font, label, kButtonCharacterSize),
@@ -116,4 +95,4 @@ sf::Color Button::GetBaseFillColor() const
     return m_isSelected ? kButtonSelectedColor : kButtonColor;
 }
 
-} 
+}

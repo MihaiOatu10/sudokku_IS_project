@@ -1,6 +1,10 @@
 #include "Application.h"
+
 #include "Theme.h"
+
 #include <SFML/Window/Event.hpp>
+
+#include <optional>
 #include <stdexcept>
 #include <string>
 
@@ -8,8 +12,6 @@ namespace sudoku::gui
 {
 namespace
 {
-constexpr unsigned kFrameRateLimit = 60;
-
 sf::Font LoadFont()
 {
     sf::Font font;
@@ -19,10 +21,12 @@ sf::Font LoadFont()
     }
     return font;
 }
-} 
+}
 
 Application::Application()
-    : m_window(sf::VideoMode({kWindowWidth, kWindowHeight}), "Sudoku"), m_font(LoadFont()),
+    : m_window(sf::VideoMode({kWindowWidth, kWindowHeight}), std::string(kWindowTitle),
+               sf::Style::Titlebar | sf::Style::Close),
+      m_font(LoadFont()),
       m_background(sf::Vector2f(static_cast<float>(kWindowWidth), static_cast<float>(kWindowHeight)), m_font),
       m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font), m_currentScreen(m_menu->GetCurrentScreen()),
       m_gameScreen(m_font)
@@ -52,7 +56,7 @@ void Application::OnPlayUnlocked() {}
 void Application::OnScreenChanged(EScreen screen)
 {
     m_currentScreen = screen;
-    if (screen == EScreen::Game)
+    if (IsGameShown())
     {
         StartGame();
     }
@@ -61,13 +65,19 @@ void Application::OnScreenChanged(EScreen screen)
 void Application::ProcessEvents()
 {
     while (const std::optional<sf::Event> event = m_window.pollEvent())
+    {
         if (event->is<sf::Event::Closed>())
+        {
             m_window.close();
+        }
         else
-            HandleMouseEvent(*event);
+        {
+            HandleEvent(*event);
+        }
+    }
 }
 
-void Application::HandleMouseEvent(const sf::Event& event)
+void Application::HandleEvent(const sf::Event& event)
 {
     if (const auto* mouseMove = event.getIf<sf::Event::MouseMoved>())
     {
@@ -75,9 +85,9 @@ void Application::HandleMouseEvent(const sf::Event& event)
     }
     else if (const auto* mouseButton = event.getIf<sf::Event::MouseButtonPressed>())
     {
-        if (mouseButton->button == sf::Mouse::Button::Left && IsMainMenuShown())
+        if (mouseButton->button == sf::Mouse::Button::Left)
         {
-            m_menuScreen.HandleClick(m_window.mapPixelToCoords(mouseButton->position));
+            HandleClick(m_window.mapPixelToCoords(mouseButton->position));
         }
     }
 }
@@ -88,9 +98,17 @@ void Application::HandleMouseMove(sf::Vector2f mousePosition)
     {
         m_menuScreen.HandleMouseMove(mousePosition);
     }
-    else if (m_currentScreen == EScreen::Game)
+    else if (IsGameShown())
     {
         m_gameScreen.HandleMouseMove(mousePosition);
+    }
+}
+
+void Application::HandleClick(sf::Vector2f mousePosition)
+{
+    if (IsMainMenuShown())
+    {
+        m_menuScreen.HandleClick(mousePosition);
     }
 }
 
@@ -98,11 +116,11 @@ void Application::Render()
 {
     m_window.clear();
     m_background.Draw(m_window);
-    if (m_currentScreen == EScreen::MainMenu)
+    if (IsMainMenuShown())
     {
         m_menuScreen.Draw(m_window);
     }
-    else if (m_currentScreen == EScreen::Game)
+    else if (IsGameShown())
     {
         m_gameScreen.Draw(m_window);
     }
@@ -114,9 +132,14 @@ bool Application::IsMainMenuShown() const
     return m_currentScreen == EScreen::MainMenu;
 }
 
+bool Application::IsGameShown() const
+{
+    return m_currentScreen == EScreen::Game;
+}
+
 void Application::StartGame()
 {
     m_game = IGame::Produce(*m_menu->GetSelectedDifficulty());
     m_gameScreen.ShowGame(*m_game);
 }
-} 
+}

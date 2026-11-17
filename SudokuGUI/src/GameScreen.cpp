@@ -1,11 +1,13 @@
 #include "GameScreen.h"
-#include "SudokuLogic/EDifficulty.h"
+
 #include "Theme.h"
+
+#include "SudokuLogic/EDifficulty.h"
 
 namespace sudoku::gui
 {
 GameScreen::GameScreen(const sf::Font& font)
-    : m_font(font), m_boardView(font, GetBoardTopLeft(), kBoardCellSize), m_numberPad(font, GetNumberPadTopLeft()),
+    : m_font(font), m_boardView(font, GetBoardTopLeft()), m_numberPad(font, GetNumberPadTopLeft()),
       m_title(font, kTitleText, kSmallTitleFontSize, kSmallTitleSpacing)
 {
     m_title.CenterAbove(GetNumberPadTopLeft(), kPadWidth, kTitlePadSpacing);
@@ -39,11 +41,6 @@ void GameScreen::HandleMouseMove(sf::Vector2f mousePosition)
     m_numberPad.HandleMouseMove(mousePosition);
 }
 
-sf::Vector2f GameScreen::GetBoardTopLeft() const
-{
-    return GetGroupTopLeft();
-}
-
 sf::Vector2f GameScreen::GetNumberPadTopLeft() const
 {
     const sf::Vector2f boardTopLeft = GetBoardTopLeft();
@@ -51,7 +48,7 @@ sf::Vector2f GameScreen::GetNumberPadTopLeft() const
             boardTopLeft.y + (kBoardPixelSize - kPadHeight) / kHalf};
 }
 
-sf::Vector2f GameScreen::GetGroupTopLeft() const
+sf::Vector2f GameScreen::GetBoardTopLeft() const
 {
     const float totalWidth = kBoardPixelSize + kPadBoardSpacing + kPadWidth;
 

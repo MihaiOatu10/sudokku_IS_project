@@ -117,4 +117,4 @@ float MenuScreen::GetPlayButtonY() const
     return kButtonStartY + (static_cast<float>(sudoku::kAllDifficulties.size()) * (kButtonHeight + kButtonSpacing)) +
            kPlayButtonMargin;
 }
-} 
+}

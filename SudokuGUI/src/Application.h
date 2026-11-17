@@ -1,13 +1,17 @@
 #pragma once
+
 #include "Background.h"
 #include "GameScreen.h"
 #include "MenuScreen.h"
+
 #include "SudokuLogic/EDifficulty.h"
 #include "SudokuLogic/EScreen.h"
 #include "SudokuLogic/IGame.h"
 #include "SudokuLogic/IMenu.h"
 #include "SudokuLogic/IMenuListener.h"
+
 #include <SFML/Graphics.hpp>
+
 #include <memory>
 
 namespace sudoku::gui
@@ -17,6 +21,7 @@ class Application : public IMenuListener
   public:
     Application();
     ~Application() override;
+
     void Run();
 
     void OnDifficultySelected(EDifficulty difficulty) override;
@@ -25,10 +30,13 @@ class Application : public IMenuListener
 
   private:
     void ProcessEvents();
-    void HandleMouseEvent(const sf::Event& event);
+    void HandleEvent(const sf::Event& event);
     void HandleMouseMove(sf::Vector2f mousePosition);
+    void HandleClick(sf::Vector2f mousePosition);
     void Render();
+
     bool IsMainMenuShown() const;
+    bool IsGameShown() const;
     void StartGame();
 
     sf::RenderWindow m_window;
@@ -40,4 +48,4 @@ class Application : public IMenuListener
     std::unique_ptr<IGame> m_game;
     GameScreen m_gameScreen;
 };
-} 
+}

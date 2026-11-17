@@ -34,4 +34,4 @@ void NumberPad::Draw(sf::RenderTarget& target) const
     for (const auto& button : m_buttons)
         button.Draw(target);
 }
-} 
+}

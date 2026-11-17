@@ -1,5 +1,7 @@
 #include "TitleText.h"
+
 #include "Theme.h"
+
 #include <cstddef>
 #include <string>
 #include <utility>

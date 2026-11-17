@@ -16,4 +16,4 @@ class NumberPad
   private:
     std::vector<Button> m_buttons;
 };
-} 
+}

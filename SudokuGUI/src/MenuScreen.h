@@ -39,4 +39,4 @@ class MenuScreen : public IMenuListener
     sf::Text m_promptText;
     bool m_isPlayUnlocked;
 };
-} 
+}

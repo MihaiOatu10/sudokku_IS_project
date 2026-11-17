@@ -58,6 +58,7 @@ xcopy /y /d /e /i /q "$(ProjectDir)assets" "$(OutDir)assets"</Command>
     <ClInclude Include="src\Theme.h" />
     <ClInclude Include="src\MenuScreen.h" />
     <ClInclude Include="src\TitleText.h" />
+    <ClInclude Include="src\RoundedRectangle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BoardView.cpp" />

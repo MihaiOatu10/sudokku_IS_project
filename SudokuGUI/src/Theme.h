@@ -14,6 +14,8 @@ namespace sudoku::gui
 inline constexpr float kHalf = 2.0f;
 inline constexpr unsigned kWindowWidth = 1000;
 inline constexpr unsigned kWindowHeight = 700;
+inline constexpr unsigned kFrameRateLimit = 60;
+inline constexpr std::string_view kWindowTitle = "Sudoku";
 
 inline constexpr std::string_view kFontPath = "assets/fonts/Fredoka.ttf";
 
@@ -48,7 +50,7 @@ inline constexpr sf::Color kButtonSelectedColor = kPastelPeach;
 inline constexpr sf::Color kButtonDisabledColor{220, 220, 222};
 
 inline constexpr float kButtonCornerRadius = 18.f;
-inline constexpr std::size_t kButtonCornerPointCount = 8;
+inline constexpr std::size_t kCornerPointCount = 8;
 inline constexpr float kButtonOutlineThickness = 4.f;
 inline constexpr float kButtonSelectedOutlineThickness = 7.f;
 inline constexpr unsigned kButtonCharacterSize = 32;
@@ -159,4 +161,4 @@ inline constexpr float kTitlePadSpacing = 20.f;
 inline constexpr unsigned kDifficultyTitleFontSize = 40;
 inline constexpr float kDifficultyTitleSpacing = 32.f;
 inline constexpr float kDifficultyTitleBoardSpacing = 15.f;
-} 
+}

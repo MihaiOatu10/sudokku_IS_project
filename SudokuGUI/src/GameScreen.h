@@ -1,9 +1,13 @@
 #pragma once
+
 #include "BoardView.h"
 #include "NumberPad.h"
-#include "SudokuLogic/IGame.h"
 #include "TitleText.h"
+
+#include "SudokuLogic/IGame.h"
+
 #include <SFML/Graphics.hpp>
+
 #include <optional>
 
 namespace sudoku::gui
@@ -20,7 +24,6 @@ class GameScreen
   private:
     sf::Vector2f GetBoardTopLeft() const;
     sf::Vector2f GetNumberPadTopLeft() const;
-    sf::Vector2f GetGroupTopLeft() const;
 
     const sf::Font& m_font;
     BoardView m_boardView;
