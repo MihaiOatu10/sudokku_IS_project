@@ -135,6 +135,10 @@ inline constexpr float kBoardPixelSize = static_cast<float>(kBoardSize) * kBoard
 inline constexpr float kThinLineThickness = 2.f;
 inline constexpr float kThickLineThickness = 5.f;
 
+inline constexpr unsigned kGivenDigitCharacterSize = 38;
+inline constexpr unsigned kEnteredDigitCharacterSize = 34;
+inline constexpr sf::Color kEnteredDigitColor{80, 130, 200};
+
 inline constexpr float kPadButtonSize = 65.f;
 inline constexpr float kPadButtonSpacing = 15.f;
 inline constexpr float kPadBoardSpacing = 60.f;

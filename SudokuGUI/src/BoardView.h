@@ -1,5 +1,7 @@
 #pragma once
+#include "SudokuLogic/IGame.h"
 #include <SFML/Graphics.hpp>
+#include <cstddef>
 #include <vector>
 
 namespace sudoku::gui
@@ -7,16 +9,24 @@ namespace sudoku::gui
 class BoardView
 {
   public:
-    BoardView(sf::Vector2f topLeft, float cellSize);
+    BoardView(const sf::Font& font, sf::Vector2f topLeft, float cellSize);
 
     void Draw(sf::RenderTarget& target) const;
+    void DrawDigits(sf::RenderTarget& target, const IGame& game) const;
 
   private:
-    void InitializeBackground(sf::Vector2f topLeft);
-    void InitializeGrid(sf::Vector2f topLeft, float cellSize);
+    void InitializeBackground();
+    void InitializeGrid();
+    void DrawCell(sf::RenderTarget& target, const IGame& game, std::size_t row, std::size_t column) const;
+    sf::Text CreateDigit(int value, bool isGiven, sf::Vector2f center) const;
+    sf::Vector2f GetCellTopLeft(std::size_t row, std::size_t column) const;
+    sf::Vector2f GetCellCenter(std::size_t row, std::size_t column) const;
 
+    const sf::Font& m_font;
+    sf::Vector2f m_topLeft;
+    float m_cellSize;
     sf::ConvexShape m_background;
     sf::ConvexShape m_shadow;
     std::vector<sf::RectangleShape> m_gridLines;
 };
-} 
+}

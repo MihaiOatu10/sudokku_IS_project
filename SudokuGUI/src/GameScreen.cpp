@@ -5,7 +5,7 @@
 namespace sudoku::gui
 {
 GameScreen::GameScreen(const sf::Font& font)
-    : m_font(font), m_boardView(GetBoardTopLeft(), kBoardCellSize), m_numberPad(font, GetNumberPadTopLeft()),
+    : m_font(font), m_boardView(font, GetBoardTopLeft(), kBoardCellSize), m_numberPad(font, GetNumberPadTopLeft()),
       m_title(font, kTitleText, kSmallTitleFontSize, kSmallTitleSpacing)
 {
     m_title.CenterAbove(GetNumberPadTopLeft(), kPadWidth, kTitlePadSpacing);
@@ -22,6 +22,10 @@ void GameScreen::ShowGame(const IGame& game)
 void GameScreen::Draw(sf::RenderTarget& target) const
 {
     m_boardView.Draw(target);
+    if (m_game)
+    {
+        m_boardView.DrawDigits(target, *m_game);
+    }
     m_numberPad.Draw(target);
     m_title.Draw(target);
     if (m_difficultyTitle)
