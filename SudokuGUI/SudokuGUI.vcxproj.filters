@@ -30,6 +30,9 @@
     <ClInclude Include="src\NumberPad.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="src\TitleText.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -54,6 +57,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="src\NumberPad.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TitleText.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

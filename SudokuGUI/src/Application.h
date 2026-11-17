@@ -4,6 +4,7 @@
 #include "MenuScreen.h"
 #include "SudokuLogic/EDifficulty.h"
 #include "SudokuLogic/EScreen.h"
+#include "SudokuLogic/IGame.h"
 #include "SudokuLogic/IMenu.h"
 #include "SudokuLogic/IMenuListener.h"
 #include <SFML/Graphics.hpp>
@@ -28,6 +29,7 @@ class Application : public IMenuListener
     void HandleMouseMove(sf::Vector2f mousePosition);
     void Render();
     bool IsMainMenuShown() const;
+    void StartGame();
 
     sf::RenderWindow m_window;
     sf::Font m_font;
@@ -35,6 +37,7 @@ class Application : public IMenuListener
     std::unique_ptr<IMenu> m_menu;
     MenuScreen m_menuScreen;
     EScreen m_currentScreen;
+    std::unique_ptr<IGame> m_game;
     GameScreen m_gameScreen;
 };
 } 

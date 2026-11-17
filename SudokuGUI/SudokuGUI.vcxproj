@@ -57,6 +57,7 @@ xcopy /y /d /e /i /q "$(ProjectDir)assets" "$(OutDir)assets"</Command>
     <ClInclude Include="src\NumberPad.h" />
     <ClInclude Include="src\Theme.h" />
     <ClInclude Include="src\MenuScreen.h" />
+    <ClInclude Include="src\TitleText.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BoardView.cpp" />
@@ -67,6 +68,7 @@ xcopy /y /d /e /i /q "$(ProjectDir)assets" "$(OutDir)assets"</Command>
     <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\MenuScreen.cpp" />
     <ClCompile Include="src\NumberPad.cpp" />
+    <ClCompile Include="src\TitleText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SudokuLogic\SudokuLogic.vcxproj">

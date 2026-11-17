@@ -4,6 +4,7 @@
 #include "SudokuLogic/EScreen.h"
 #include "SudokuLogic/IMenu.h"
 #include "SudokuLogic/IMenuListener.h"
+#include "TitleText.h"
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <utility>
@@ -26,13 +27,13 @@ class MenuScreen : public IMenuListener
     void OnScreenChanged(EScreen screen) override;
 
   private:
-    void InitializeTitle(const sf::Font& font);
+    void InitializeTitle();
     void InitializeDifficultyButtons(const sf::Font& font);
     void InitializePromptText();
     float GetPlayButtonY() const;
 
     IMenu& m_menu;
-    std::vector<sf::Text> m_titleLetters;
+    TitleText m_title;
     std::vector<std::pair<EDifficulty, Button>> m_difficultyButtons;
     Button m_playButton;
     sf::Text m_promptText;

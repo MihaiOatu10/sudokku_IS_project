@@ -4,12 +4,13 @@
 namespace sudoku::gui
 {
 MenuScreen::MenuScreen(IMenu& menu, const sf::Font& font)
-    : m_menu(menu), m_playButton(font, "Play", sf::Vector2f(static_cast<float>(kWindowWidth) / kHalf, GetPlayButtonY()),
-                                 sf::Vector2f(kPlayButtonWidth, kPlayButtonHeight)),
+    : m_menu(menu), m_title(font, kTitleText, static_cast<unsigned int>(kTitleFontSize), kTitleSpacing),
+      m_playButton(font, "Play", sf::Vector2f(static_cast<float>(kWindowWidth) / kHalf, GetPlayButtonY()),
+                   sf::Vector2f(kPlayButtonWidth, kPlayButtonHeight)),
       m_promptText(font, std::string(kPromptMessage), static_cast<unsigned int>(kPromptFontSize)),
       m_isPlayUnlocked(m_menu.IsPlayUnlocked())
 {
-    InitializeTitle(font);
+    InitializeTitle();
     InitializeDifficultyButtons(font);
     m_playButton.SetEnabled(m_isPlayUnlocked);
     InitializePromptText();
@@ -49,10 +50,7 @@ void MenuScreen::HandleClick(sf::Vector2f mousePosition)
 
 void MenuScreen::Draw(sf::RenderTarget& target) const
 {
-    for (const auto& letter : m_titleLetters)
-    {
-        target.draw(letter);
-    }
+    m_title.Draw(target);
 
     for (const auto& [difficulty, button] : m_difficultyButtons)
     {
@@ -83,21 +81,9 @@ void MenuScreen::OnPlayUnlocked()
 
 void MenuScreen::OnScreenChanged(EScreen) {}
 
-void MenuScreen::InitializeTitle(const sf::Font& font)
+void MenuScreen::InitializeTitle()
 {
-    const float startX =
-        (static_cast<float>(kWindowWidth) - (static_cast<float>(kTitleText.size()) * kTitleSpacing)) / kHalf;
-
-    for (std::size_t letterIndex = 0; letterIndex < kTitleText.size(); ++letterIndex)
-    {
-        sf::Text letter(font, std::string(1, kTitleText[letterIndex]), static_cast<unsigned int>(kTitleFontSize));
-        letter.setFillColor(kTitleColors[letterIndex % kTitleColors.size()]);
-        letter.setOutlineColor(kTitleOutlineColor);
-        letter.setOutlineThickness(kTitleOutlineThickness);
-        letter.setRotation(sf::degrees(kTitleRotations[letterIndex % kTitleRotations.size()]));
-        letter.setPosition({startX + (static_cast<float>(letterIndex) * kTitleSpacing), kTitleY});
-        m_titleLetters.push_back(std::move(letter));
-    }
+    m_title.SetPosition({(static_cast<float>(kWindowWidth) - m_title.GetWidth()) / kHalf, kTitleY});
 }
 
 void MenuScreen::InitializeDifficultyButtons(const sf::Font& font)

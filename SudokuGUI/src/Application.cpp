@@ -52,6 +52,10 @@ void Application::OnPlayUnlocked() {}
 void Application::OnScreenChanged(EScreen screen)
 {
     m_currentScreen = screen;
+    if (screen == EScreen::Game)
+    {
+        StartGame();
+    }
 }
 
 void Application::ProcessEvents()
@@ -108,5 +112,11 @@ void Application::Render()
 bool Application::IsMainMenuShown() const
 {
     return m_currentScreen == EScreen::MainMenu;
+}
+
+void Application::StartGame()
+{
+    m_game = IGame::Produce(*m_menu->GetSelectedDifficulty());
+    m_gameScreen.ShowGame(*m_game);
 }
 } 

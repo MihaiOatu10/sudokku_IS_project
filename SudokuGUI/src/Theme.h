@@ -151,4 +151,8 @@ inline constexpr float kBoardCornerRadius = 8.f;
 inline constexpr float kBoardShadowOffset = 12.f;
 inline constexpr sf::Color kBoardShadowColor{0, 0, 0, 40};
 inline constexpr float kTitlePadSpacing = 20.f;
+
+inline constexpr unsigned kDifficultyTitleFontSize = 40;
+inline constexpr float kDifficultyTitleSpacing = 32.f;
+inline constexpr float kDifficultyTitleBoardSpacing = 15.f;
 } 
