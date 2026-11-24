@@ -110,6 +110,10 @@ void Application::HandleClick(sf::Vector2f mousePosition)
     {
         m_menuScreen.HandleClick(mousePosition);
     }
+    else if (IsGameShown())
+    {
+        m_gameScreen.HandleClick(mousePosition);
+    }
 }
 
 void Application::Render()

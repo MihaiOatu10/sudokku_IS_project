@@ -17,9 +17,11 @@ class GameScreen
   public:
     explicit GameScreen(const sf::Font& font);
 
-    void ShowGame(const IGame& game);
+    void ShowGame(IGame& game);
     void Draw(sf::RenderTarget& target) const;
     void HandleMouseMove(sf::Vector2f mousePosition);
+
+    void HandleClick(sf::Vector2f mousePosition);
 
   private:
     sf::Vector2f GetBoardTopLeft() const;
@@ -30,6 +32,6 @@ class GameScreen
     NumberPad m_numberPad;
     TitleText m_title;
     std::optional<TitleText> m_difficultyTitle;
-    const IGame* m_game = nullptr;
+    IGame* m_game = nullptr;
 };
 }

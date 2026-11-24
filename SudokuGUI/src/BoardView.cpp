@@ -31,10 +31,14 @@ BoardView::BoardView(const sf::Font& font, sf::Vector2f topLeft)
     InitializeGrid();
 }
 
-void BoardView::Draw(sf::RenderTarget& target) const
+void BoardView::Draw(sf::RenderTarget& target, const IGame* game) const
 {
     target.draw(m_shadow);
     target.draw(m_background);
+    if (game)
+    {
+        DrawSelectedCell(target, *game);
+    }
     for (const auto& line : m_gridLines)
     {
         target.draw(line);
@@ -48,6 +52,45 @@ void BoardView::DrawDigits(sf::RenderTarget& target, const IGame& game) const
         for (std::size_t column = 0; column < kBoardSize; ++column)
         {
             DrawCell(target, game, row, column);
+        }
+    }
+}
+
+std::optional<CellPosition> BoardView::FindCellAt(sf::Vector2f position) const
+{
+    const sf::Vector2f boardTopLeft = GetCellTopLeft(0, 0);
+    const sf::Vector2f relativePosition = position - boardTopLeft;
+
+    if (relativePosition.x < 0.f || relativePosition.y < 0.f)
+    {
+        return std::nullopt;
+    }
+
+    const std::size_t column = static_cast<std::size_t>(relativePosition.x / kBoardCellSize);
+    const std::size_t row = static_cast<std::size_t>(relativePosition.y / kBoardCellSize);
+
+    if (row >= kBoardSize || column >= kBoardSize)
+    {
+        return std::nullopt;
+    }
+
+    return CellPosition{row, column};
+}
+
+void BoardView::DrawSelectedCell(sf::RenderTarget& target, const IGame& game) const
+{
+    for (std::size_t row = 0; row < kBoardSize; ++row)
+    {
+        for (std::size_t column = 0; column < kBoardSize; ++column)
+        {
+            if (game.IsCellSelected(row, column))
+            {
+                sf::RectangleShape highlight({kBoardCellSize, kBoardCellSize});
+                highlight.setPosition(GetCellTopLeft(row, column));
+                highlight.setFillColor(kSelectedCellColor);
+                target.draw(highlight);
+                return;
+            }
         }
     }
 }

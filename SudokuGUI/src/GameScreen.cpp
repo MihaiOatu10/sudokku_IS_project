@@ -13,7 +13,7 @@ GameScreen::GameScreen(const sf::Font& font)
     m_title.CenterAbove(GetNumberPadTopLeft(), kPadWidth, kTitlePadSpacing);
 }
 
-void GameScreen::ShowGame(const IGame& game)
+void GameScreen::ShowGame(IGame& game)
 {
     m_game = &game;
     m_difficultyTitle.emplace(m_font, GetDifficultyName(game.GetDifficulty()), kDifficultyTitleFontSize,
@@ -23,7 +23,7 @@ void GameScreen::ShowGame(const IGame& game)
 
 void GameScreen::Draw(sf::RenderTarget& target) const
 {
-    m_boardView.Draw(target);
+    m_boardView.Draw(target, m_game);
     if (m_game)
     {
         m_boardView.DrawDigits(target, *m_game);
@@ -41,6 +41,19 @@ void GameScreen::HandleMouseMove(sf::Vector2f mousePosition)
     m_numberPad.HandleMouseMove(mousePosition);
 }
 
+void GameScreen::HandleClick(sf::Vector2f mousePosition)
+{
+    if (!m_game)
+    {
+        return;
+    }
+
+    if (const std::optional<CellPosition> cell = m_boardView.FindCellAt(mousePosition))
+    {
+        m_game->SelectCell(cell->row, cell->column);
+    }
+}
+
 sf::Vector2f GameScreen::GetNumberPadTopLeft() const
 {
     const sf::Vector2f boardTopLeft = GetBoardTopLeft();
@@ -55,4 +68,5 @@ sf::Vector2f GameScreen::GetBoardTopLeft() const
     return {(static_cast<float>(kWindowWidth) - totalWidth) / kHalf,
             (static_cast<float>(kWindowHeight) - kBoardPixelSize) / kHalf};
 }
+
 }

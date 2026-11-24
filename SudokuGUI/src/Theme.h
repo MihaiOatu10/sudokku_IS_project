@@ -161,4 +161,6 @@ inline constexpr float kTitlePadSpacing = 20.f;
 inline constexpr unsigned kDifficultyTitleFontSize = 40;
 inline constexpr float kDifficultyTitleSpacing = 32.f;
 inline constexpr float kDifficultyTitleBoardSpacing = 15.f;
+
+inline constexpr sf::Color kSelectedCellColor{215, 235, 255};
 }

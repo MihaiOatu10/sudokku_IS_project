@@ -5,17 +5,25 @@
 #include <SFML/Graphics.hpp>
 
 #include <cstddef>
+#include <optional>
 #include <vector>
 
 namespace sudoku::gui
 {
+struct CellPosition
+{
+    std::size_t row;
+    std::size_t column;
+};
+
 class BoardView
 {
   public:
     BoardView(const sf::Font& font, sf::Vector2f topLeft);
 
-    void Draw(sf::RenderTarget& target) const;
+    void Draw(sf::RenderTarget& target, const IGame* game = nullptr) const;
     void DrawDigits(sf::RenderTarget& target, const IGame& game) const;
+    std::optional<CellPosition> FindCellAt(sf::Vector2f position) const;
 
   private:
     void InitializeGrid();
@@ -23,6 +31,7 @@ class BoardView
     sf::Text CreateDigit(int value, bool isGiven, sf::Vector2f center) const;
     sf::Vector2f GetCellTopLeft(std::size_t row, std::size_t column) const;
     sf::Vector2f GetCellCenter(std::size_t row, std::size_t column) const;
+    void DrawSelectedCell(sf::RenderTarget& target, const IGame& game) const;
 
     const sf::Font& m_font;
     sf::Vector2f m_topLeft;
