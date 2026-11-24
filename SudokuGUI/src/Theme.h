@@ -170,4 +170,18 @@ inline constexpr sf::Color kSelectedCellColor{215, 235, 255};
 inline constexpr unsigned kMistakesFontSize = 28;
 inline constexpr float kMistakesPadSpacing = 25.f;
 inline constexpr std::string_view kMistakesPrefix = "Mistakes: ";
+
+inline constexpr float kEndPanelWidth = 360.f;
+inline constexpr float kEndPanelHeight = 220.f;
+inline constexpr float kEndPanelCornerRadius = 24.f;
+inline constexpr sf::Color kEndPanelColor = kBoardBackgroundColor;
+inline constexpr unsigned kEndMessageFontSize = 48;
+inline constexpr float kEndMessageOffsetY = -45.f;
+inline constexpr std::string_view kWinMessage = "You win!";
+inline constexpr std::string_view kLoseMessage = "Game over";
+
+inline constexpr std::string_view kMenuButtonLabel = "Menu";
+inline constexpr float kMenuButtonWidth = 180.f;
+inline constexpr float kMenuButtonHeight = 55.f;
+inline constexpr float kMenuButtonOffsetY = 50.f;
 }

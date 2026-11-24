@@ -28,6 +28,7 @@ class Application
 
     bool IsMainMenuShown() const;
     bool IsGameShown() const;
+    IGame& GetGame() const;
 
     sf::RenderWindow m_window;
     sf::Font m_font;

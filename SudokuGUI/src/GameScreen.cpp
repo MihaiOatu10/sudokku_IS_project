@@ -3,15 +3,24 @@
 #include "Theme.h"
 
 #include "SudokuLogic/EDifficulty.h"
+#include "SudokuLogic/EGameState.h"
 
 #include <optional>
 #include <string>
 
 namespace sudoku::gui
 {
-GameScreen::GameScreen(const sf::Font& font)
-    : m_font(font), m_boardView(font, GetBoardTopLeft()), m_numberPad(font, GetNumberPadTopLeft()),
-      m_title(font, kTitleText, kSmallTitleFontSize, kSmallTitleSpacing)
+namespace
+{
+bool IsGameOver(const IGame& game)
+{
+    return game.GetState() != EGameState::InProgress;
+}
+}
+
+GameScreen::GameScreen(IMenu& menu, const sf::Font& font)
+    : m_menu(menu), m_font(font), m_boardView(font, GetBoardTopLeft()), m_numberPad(font, GetNumberPadTopLeft()),
+      m_title(font, kTitleText, kSmallTitleFontSize, kSmallTitleSpacing), m_endPanel(font)
 {
     m_title.CenterAbove(GetNumberPadTopLeft(), kPadWidth, kTitlePadSpacing);
 }
@@ -23,14 +32,33 @@ void GameScreen::Draw(sf::RenderTarget& target, const IGame& game) const
     m_numberPad.Draw(target);
     m_title.Draw(target);
     DrawDifficultyTitle(target, game);
+    if (IsGameOver(game))
+    {
+        m_endPanel.Draw(target, game.GetState());
+    }
 }
 
-void GameScreen::HandleMouseMove(sf::Vector2f mousePosition)
+void GameScreen::HandleMouseMove(sf::Vector2f mousePosition, const IGame& game)
 {
+    if (IsGameOver(game))
+    {
+        m_endPanel.HandleMouseMove(mousePosition);
+        return;
+    }
     m_numberPad.HandleMouseMove(mousePosition);
 }
 
 void GameScreen::HandleClick(sf::Vector2f mousePosition, IGame& game)
+{
+    if (IsGameOver(game))
+    {
+        HandleEndPanelClick(mousePosition);
+        return;
+    }
+    HandleBoardClick(mousePosition, game);
+}
+
+void GameScreen::HandleBoardClick(sf::Vector2f mousePosition, IGame& game)
 {
     if (const std::optional<CellPosition> cell = m_boardView.FindCellAt(mousePosition))
     {
@@ -40,6 +68,14 @@ void GameScreen::HandleClick(sf::Vector2f mousePosition, IGame& game)
     if (const std::optional<int> value = m_numberPad.FindValueAt(mousePosition))
     {
         game.EnterValue(*value);
+    }
+}
+
+void GameScreen::HandleEndPanelClick(sf::Vector2f mousePosition)
+{
+    if (m_endPanel.IsMenuClicked(mousePosition))
+    {
+        m_menu.ReturnToMainMenu();
     }
 }
 

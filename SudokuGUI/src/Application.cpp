@@ -28,7 +28,7 @@ Application::Application()
                sf::Style::Titlebar | sf::Style::Close),
       m_font(LoadFont()),
       m_background(sf::Vector2f(static_cast<float>(kWindowWidth), static_cast<float>(kWindowHeight)), m_font),
-      m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font), m_gameScreen(m_font)
+      m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font), m_gameScreen(*m_menu, m_font)
 {
     m_window.setFramerateLimit(kFrameRateLimit);
 }
@@ -80,7 +80,7 @@ void Application::HandleMouseMove(sf::Vector2f mousePosition)
     }
     else if (IsGameShown())
     {
-        m_gameScreen.HandleMouseMove(mousePosition);
+        m_gameScreen.HandleMouseMove(mousePosition, GetGame());
     }
 }
 
@@ -92,7 +92,7 @@ void Application::HandleClick(sf::Vector2f mousePosition)
     }
     else if (IsGameShown())
     {
-        m_gameScreen.HandleClick(mousePosition, *m_menu->GetGame());
+        m_gameScreen.HandleClick(mousePosition, GetGame());
     }
 }
 
@@ -106,7 +106,7 @@ void Application::Render()
     }
     else if (IsGameShown())
     {
-        m_gameScreen.Draw(m_window, *m_menu->GetGame());
+        m_gameScreen.Draw(m_window, GetGame());
     }
     m_window.display();
 }
@@ -119,5 +119,10 @@ bool Application::IsMainMenuShown() const
 bool Application::IsGameShown() const
 {
     return m_menu->GetCurrentScreen() == EScreen::Game;
+}
+
+IGame& Application::GetGame() const
+{
+    return *m_menu->GetGame();
 }
 }

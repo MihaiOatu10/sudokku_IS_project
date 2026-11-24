@@ -52,6 +52,7 @@ xcopy /y /d /e /i /q "$(ProjectDir)assets" "$(OutDir)assets"</Command>
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Background.h" />
     <ClInclude Include="src\BoardView.h" />
+    <ClInclude Include="src\EndPanel.h" />
     <ClInclude Include="src\Button.h" />
     <ClInclude Include="src\GameScreen.h" />
     <ClInclude Include="src\NumberPad.h" />
@@ -62,6 +63,7 @@ xcopy /y /d /e /i /q "$(ProjectDir)assets" "$(OutDir)assets"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BoardView.cpp" />
+    <ClCompile Include="src\EndPanel.cpp" />
     <ClCompile Include="src\GameScreen.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Application.cpp" />

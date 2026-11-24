@@ -36,6 +36,9 @@
     <ClInclude Include="src\RoundedRectangle.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="src\EndPanel.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -63,6 +66,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="src\TitleText.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EndPanel.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
