@@ -19,14 +19,19 @@ public:
     bool IsPlayUnlocked() const override;
 
     void Play() override;
+    void ReturnToMainMenu() override;
     EScreen GetCurrentScreen() const override;
 
+    IGame* GetGame() const override;
+
 private:
+    void ChangeScreen(EScreen screen);
     void NotifyListeners(const std::function<void(IMenuListener&)>& notification);
 
     std::vector<IMenuListener*> m_listeners;
     std::optional<EDifficulty> m_selectedDifficulty;
     EScreen m_currentScreen = EScreen::MainMenu;
+    std::unique_ptr<IGame> m_game;
 };
 
 }

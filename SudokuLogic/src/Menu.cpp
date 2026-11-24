@@ -58,14 +58,36 @@ void Menu::Play()
         return;
     }
 
-    m_currentScreen = EScreen::Game;
+    m_game = IGame::Produce(*m_selectedDifficulty);
+    ChangeScreen(EScreen::Game);
+}
 
-    NotifyListeners([](IMenuListener& listener) { listener.OnScreenChanged(EScreen::Game); });
+void Menu::ReturnToMainMenu()
+{
+    if (m_currentScreen != EScreen::Game)
+    {
+        return;
+    }
+
+    m_game.reset();
+    ChangeScreen(EScreen::MainMenu);
 }
 
 EScreen Menu::GetCurrentScreen() const
 {
     return m_currentScreen;
+}
+
+IGame* Menu::GetGame() const
+{
+    return m_game.get();
+}
+
+void Menu::ChangeScreen(EScreen screen)
+{
+    m_currentScreen = screen;
+
+    NotifyListeners([screen](IMenuListener& listener) { listener.OnScreenChanged(screen); });
 }
 
 void Menu::NotifyListeners(const std::function<void(IMenuListener&)>& notification)

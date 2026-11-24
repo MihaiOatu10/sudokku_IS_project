@@ -2,6 +2,7 @@
 
 #include "SudokuLogic/EDifficulty.h"
 #include "SudokuLogic/EScreen.h"
+#include "SudokuLogic/IGame.h"
 #include "SudokuLogic/IMenuListener.h"
 
 #include <memory>
@@ -25,7 +26,10 @@ public:
     virtual bool IsPlayUnlocked() const = 0;
 
     virtual void Play() = 0;
+    virtual void ReturnToMainMenu() = 0;
     virtual EScreen GetCurrentScreen() const = 0;
+
+    virtual IGame* GetGame() const = 0;
 };
 
 }
