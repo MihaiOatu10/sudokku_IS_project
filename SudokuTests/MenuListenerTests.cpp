@@ -7,6 +7,7 @@
 namespace sudoku::test
 {
 
+using ::testing::Mock;
 using ::testing::StrictMock;
 
 class MenuListenerTests : public ::testing::Test
@@ -103,6 +104,11 @@ TEST_F(MenuListenerTests, PlayNotifiesTheGameScreen)
     m_menu->Play();
 }
 
+TEST_F(MenuListenerTests, ReturningToTheMainMenuFromTheMainMenuNotifiesNothing)
+{
+    m_menu->ReturnToMainMenu();
+}
+
 TEST_F(MenuListenerTests, PlayingTwiceNotifiesOnlyOnce)
 {
     EXPECT_CALL(m_listener, OnDifficultySelected(EDifficulty::Easy));
@@ -112,6 +118,29 @@ TEST_F(MenuListenerTests, PlayingTwiceNotifiesOnlyOnce)
     m_menu->SelectDifficulty(EDifficulty::Easy);
     m_menu->Play();
     m_menu->Play();
+}
+
+class MenuListenerInGameTests : public MenuListenerTests
+{
+protected:
+    MenuListenerInGameTests()
+    {
+        EXPECT_CALL(m_listener, OnDifficultySelected(EDifficulty::Easy));
+        EXPECT_CALL(m_listener, OnPlayUnlocked());
+        EXPECT_CALL(m_listener, OnScreenChanged(EScreen::Game));
+
+        m_menu->SelectDifficulty(EDifficulty::Easy);
+        m_menu->Play();
+
+        Mock::VerifyAndClearExpectations(&m_listener);
+    }
+};
+
+TEST_F(MenuListenerInGameTests, ReturningToTheMainMenuNotifiesTheMainMenuScreen)
+{
+    EXPECT_CALL(m_listener, OnScreenChanged(EScreen::MainMenu));
+
+    m_menu->ReturnToMainMenu();
 }
 
 }
