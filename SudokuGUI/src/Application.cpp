@@ -21,13 +21,13 @@ sf::Font LoadFont()
     }
     return font;
 }
-} 
+}
 
 Application::Application()
     : m_window(sf::VideoMode({kWindowWidth, kWindowHeight}), std::string(kWindowTitle),
                sf::Style::Titlebar | sf::Style::Close),
       m_font(LoadFont()),
-      m_background(sf::Vector2f(static_cast<float>(kWindowWidth), static_cast<float>(kWindowHeight)), m_font),
+      m_background(kWindowSize, m_font),
       m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font), m_gameScreen(*m_menu, m_font)
 {
     m_window.setFramerateLimit(kFrameRateLimit);

@@ -24,7 +24,7 @@ sf::Color Lighten(sf::Color color)
 {
     return {LightenChannel(color.r), LightenChannel(color.g), LightenChannel(color.b), color.a};
 }
-} 
+}
 
 Button::Button(const sf::Font& font, const std::string& label, sf::Vector2f center, sf::Vector2f size)
     : m_shape(CreateRoundedRectangle(size, kButtonCornerRadius)), m_label(font, label, kButtonCharacterSize),
@@ -95,4 +95,4 @@ sf::Color Button::GetBaseFillColor() const
     return m_isSelected ? kButtonSelectedColor : kButtonColor;
 }
 
-} 
+}

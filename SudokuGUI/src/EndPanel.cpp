@@ -9,9 +9,6 @@ namespace sudoku::gui
 {
 namespace
 {
-constexpr sf::Vector2f kPanelCenter{static_cast<float>(kWindowWidth) / kHalf,
-                                    static_cast<float>(kWindowHeight) / kHalf};
-
 std::string_view GetEndMessage(EGameState state)
 {
     switch (state)
@@ -27,10 +24,10 @@ std::string_view GetEndMessage(EGameState state)
 
 EndPanel::EndPanel(const sf::Font& font)
     : m_font(font), m_panel(CreateRoundedRectangle({kEndPanelWidth, kEndPanelHeight}, kEndPanelCornerRadius)),
-      m_menuButton(font, std::string(kMenuButtonLabel), kPanelCenter + sf::Vector2f(0.f, kMenuButtonOffsetY),
+      m_menuButton(font, std::string(kMenuButtonLabel), kWindowCenter + sf::Vector2f(0.f, kMenuButtonOffsetY),
                    {kMenuButtonWidth, kMenuButtonHeight})
 {
-    m_panel.setPosition(kPanelCenter);
+    m_panel.setPosition(kWindowCenter);
     m_panel.setFillColor(kEndPanelColor);
     m_panel.setOutlineColor(kInkColor);
     m_panel.setOutlineThickness(kButtonOutlineThickness);
@@ -59,7 +56,7 @@ void EndPanel::DrawMessage(sf::RenderTarget& target, std::string_view message) c
     text.setFillColor(kInkColor);
     text.setStyle(sf::Text::Bold);
     text.setOrigin(text.getLocalBounds().getCenter());
-    text.setPosition(kPanelCenter + sf::Vector2f(0.f, kEndMessageOffsetY));
+    text.setPosition(kWindowCenter + sf::Vector2f(0.f, kEndMessageOffsetY));
     target.draw(text);
 }
 }

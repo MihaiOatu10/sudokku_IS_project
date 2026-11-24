@@ -104,8 +104,8 @@ void GameScreen::DrawDifficultyTitle(sf::RenderTarget& target, const IGame& game
 
 void GameScreen::DrawMistakes(sf::RenderTarget& target, const IGame& game) const
 {
-    const std::string label =
-        std::string(kMistakesPrefix) + std::to_string(game.GetMistakeCount()) + "/" + std::to_string(kMaxMistakes);
+    const std::string label = std::string(kMistakesPrefix) + std::to_string(game.GetMistakeCount()) +
+                              std::string(kMistakesSeparator) + std::to_string(kMaxMistakes);
     sf::Text text(m_font, label, kMistakesFontSize);
     text.setFillColor(kInkColor);
 
@@ -116,4 +116,4 @@ void GameScreen::DrawMistakes(sf::RenderTarget& target, const IGame& game) const
     text.setPosition({padTopLeft.x + kPadWidth / kHalf, padTopLeft.y + kPadHeight + kMistakesPadSpacing});
     target.draw(text);
 }
-} 
+}

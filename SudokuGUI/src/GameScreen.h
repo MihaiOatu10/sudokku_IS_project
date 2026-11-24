@@ -36,4 +36,4 @@ class GameScreen
     TitleText m_title;
     EndPanel m_endPanel;
 };
-} 
+}

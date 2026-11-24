@@ -40,4 +40,4 @@ class BoardView
     sf::ConvexShape m_shadow;
     std::vector<sf::RectangleShape> m_gridLines;
 };
-} 
+}

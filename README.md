@@ -19,13 +19,15 @@ A Sudoku game in C++20, split into three projects as the course requires:
 | 1 | C++ | — | whole repo (C++20) |
 | 2 | 3 separate projects (logic, GUI, tests) | 1p | `SudokuLogic/`, `SudokuGUI/`, `SudokuTests/` |
 | 2c | Unit tests with GTest + GMock | 2p | `SudokuTests/` (mocks in `SudokuTests/mocks/`: `MockMenuListener`, `MockPuzzleGenerator`) |
-| 3 | Logic exposes an API: interfaces, enums, minimal structs | 1p | `IMenu`, `IMenuListener`, `IGame`, `EDifficulty`, `EScreen`, `BoardConstants` |
-| 4 | Observer pattern | 2p | `IMenuListener` (observer), `Menu` (subject), `MenuScreen` and `Application` (concrete observers) |
+| 3 | Logic exposes an API: interfaces, enums, minimal structs | 1p | `IMenu`, `IMenuListener`, `IGame`, `EDifficulty`, `EScreen`, `ECellState`, `EGameState`, `BoardConstants` |
+| — | Factory | — | `IMenu::Produce`, `IGame::Produce` |
+| 4 | Observer pattern | 2p | `IMenuListener` (observer), `Menu` (subject), `MenuScreen` (concrete observer) |
 | 5a | Use Case diagram | 1p | not added yet |
 | 5b | Class diagram, API coloured differently | 1p | not added yet |
 | — | No duplicated code | 0.5p | code reviews |
 | — | Descriptive names | 0.5p | see `CONTRIBUTING.md` |
 | — | UI contains no game logic | — | `SudokuGUI` only calls `IMenu` and `IGame` and draws what they return |
+| — | UI holds no state | — | The GUI keeps no copy of the level, the screen or the game: it reports clicks to the logic and reads everything from `IMenu` and `IGame` each time it draws |
 | — | Good coverage; tests fail when logic breaks | — | see [Code coverage](#code-coverage) |
 
 ---
@@ -34,7 +36,11 @@ A Sudoku game in C++20, split into three projects as the course requires:
 
 1. Start `SudokuGUI`. The main menu shows the levels **Easy**, **Medium**, **Hard** and **Expert**.
 2. Pick a level. **Play** stays locked until a level is selected.
-3. Press **Play**. A new puzzle is generated for the chosen level, and the game screen shows the level name, the 9×9 board with the given digits and a 1–9 number pad. The number pad does not enter digits yet.
+3. Press **Play**. A new puzzle is generated for the chosen level.
+4. Click a cell to select it, then press a digit on the number pad.
+5. Digit colours: **blue** = given, **black** = correct, **red** = wrong. The mistake counter is under the number pad.
+6. **3 mistakes** end the game with **Game over**. A **complete board** ends it with **You win!**
+7. Press **Menu** on the end panel to return to the main menu. The chosen level stays selected, and **Play** starts a new puzzle.
 
 ## Puzzle generation
 
@@ -53,6 +59,7 @@ A Sudoku game in C++20, split into three projects as the course requires:
 │   │   ├── IMenu.h, IMenuListener.h
 │   │   ├── IGame.h
 │   │   ├── EDifficulty.h, EScreen.h
+│   │   ├── ECellState.h, EGameState.h
 │   │   └── BoardConstants.h
 │   └── src/                        #   internal implementation
 │       ├── Menu                    #     IMenu, notifies IMenuListener
@@ -65,19 +72,20 @@ A Sudoku game in C++20, split into three projects as the course requires:
 │   ├── assets/fonts/               #   Fredoka font + its licence
 │   └── src/
 │       ├── main.cpp
-│       ├── Application             #   window, event loop, owns IMenu and IGame
+│       ├── Application             #   window, event loop, owns IMenu
 │       ├── Background              #   paper background with doodles
 │       ├── MenuScreen              #   level buttons and Play
-│       ├── GameScreen              #   level name, board and number pad
+│       ├── GameScreen              #   level name, board, number pad and mistake counter
+│       ├── EndPanel                #   "You win!" / "Game over" panel with the Menu button
 │       ├── BoardView               #   board grid and digits
 │       ├── NumberPad               #   1-9 buttons
 │       ├── Button, TitleText       #   reusable widgets
 │       ├── RoundedRectangle.h      #   shape shared by buttons and board
 │       └── Theme.h                 #   colours, sizes and layout constants
 ├── SudokuTests/                    # GoogleTest + GoogleMock unit tests
-│   ├── *Tests.cpp                  #   Board, Solver, PuzzleGenerator, Game, Menu, MenuListener, Difficulty, Button
+│   ├── *Tests.cpp                  #   Board, Solver, PuzzleGenerator, Game, GameMove, Menu, MenuListener, Difficulty, Button
 │   ├── mocks/                      #   MockMenuListener, MockPuzzleGenerator
-│   └── helpers/                    #   BoardHelpers
+│   └── helpers/                    #   BoardHelpers, GameCreationTests
 ├── external/                       # SFML 3.0.1 and GoogleTest 1.15.2, already in the repo
 └── .github/                        # CI workflow + PR template
 ```
@@ -121,21 +129,11 @@ OpenCppCoverage --sources SudokuLogic --export_type html:coverage -- bin\Debug\S
 
 ## Team & task split (4 members)
 
-Fill in names and GitHub usernames. Each member writes the unit tests for their own code, and **Member 4** owns overall coverage and quality.
-
-| Member | Area | Initial tasks |
+| Member | Area | Work |
 |---|---|---|
-| **Member 1** — _name_ | Logic: board & generator | Generator that guarantees a **unique solution** (a solver that counts solutions); difficulty tuning; hint support in `Board` |
-| **Member 2** — _name_ | Logic: game flow & API | New API features (restart puzzle, undo, mistake counter, hints) in `IGame` / `Game`; new listener events; keeping the API small and clean |
-| **Member 3** — _name_ | GUI | Menu/buttons for difficulty, win screen, highlighting same box/digit, nicer layout, bundled font. **No rules in the GUI.** |
-| **Member 4** — _name_ | Tests, UML, quality | GMock tests for new features, coverage reports, keeping `docs/uml/` in sync, reviewing PRs for duplication & naming, presentation |
-
-### Suggested timeline
-| Week | Dates | Goal |
-|---|---|---|
-| 1 | 9 – 15 Nov | Everyone clones, builds and runs; agree on API additions; open GitHub issues for each task |
-| 2 | 16 – 22 Nov | Core features: unique-solution generator, restart/undo, GUI menu |
-| 3 | 23 – 29 Nov | Remaining features, GUI polish, coverage ≥ 90% on `SudokuLogic` |
-| 4 | 30 Nov – 6 Dec | **Feature freeze on 3 Dec**, final UML, bug fixes, rehearse the demo. Submit before **6 Dec 23:00** |
+| **Member 1** | Logic | Menu flow, board, solver, puzzle generator, player moves (`SudokuLogic`) |
+| **Member 2** | Tests | Unit tests with GoogleTest + GoogleMock, mocks and helpers (`SudokuTests`) |
+| **Member 3** | UI | Main menu, board, number pad, colours (`SudokuGUI`) |
+| **Member 4** | UI + binding to the logic | No state in the GUI, end panel, README |
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the Git workflow and coding conventions.

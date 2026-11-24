@@ -14,6 +14,8 @@ namespace sudoku::gui
 inline constexpr float kHalf = 2.0f;
 inline constexpr unsigned kWindowWidth = 1000;
 inline constexpr unsigned kWindowHeight = 700;
+inline constexpr sf::Vector2f kWindowSize{static_cast<float>(kWindowWidth), static_cast<float>(kWindowHeight)};
+inline constexpr sf::Vector2f kWindowCenter = kWindowSize / kHalf;
 inline constexpr unsigned kFrameRateLimit = 60;
 inline constexpr std::string_view kWindowTitle = "Sudoku";
 
@@ -121,6 +123,7 @@ inline constexpr std::array kTitleRotations{-10.f, 10.f, -10.f, 10.f, -10.f, 10.
 
 inline constexpr std::string_view kTitleText = "SUDOKU";
 
+inline constexpr std::string_view kPlayButtonLabel = "Play";
 inline constexpr float kPlayButtonWidth = 250.f;
 inline constexpr float kPlayButtonHeight = 60.f;
 inline constexpr float kPlayButtonMargin = 40.f;
@@ -170,6 +173,7 @@ inline constexpr sf::Color kSelectedCellColor{215, 235, 255};
 inline constexpr unsigned kMistakesFontSize = 28;
 inline constexpr float kMistakesPadSpacing = 25.f;
 inline constexpr std::string_view kMistakesPrefix = "Mistakes: ";
+inline constexpr std::string_view kMistakesSeparator = "/";
 
 inline constexpr float kEndPanelWidth = 360.f;
 inline constexpr float kEndPanelHeight = 220.f;

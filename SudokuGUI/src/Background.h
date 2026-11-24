@@ -23,4 +23,4 @@ class Background
     std::vector<std::unique_ptr<sf::Drawable>> m_drawables;
 };
 
-} 
+}

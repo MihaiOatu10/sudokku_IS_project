@@ -5,9 +5,17 @@
 
 namespace sudoku::gui
 {
+namespace
+{
+float GetCenteredX(float width)
+{
+    return kWindowCenter.x - width / kHalf;
+}
+}
+
 MenuScreen::MenuScreen(IMenu& menu, const sf::Font& font)
     : m_menu(menu), m_title(font, kTitleText, static_cast<unsigned int>(kTitleFontSize), kTitleSpacing),
-      m_playButton(font, "Play", sf::Vector2f(static_cast<float>(kWindowWidth) / kHalf, GetPlayButtonY()),
+      m_playButton(font, std::string(kPlayButtonLabel), sf::Vector2f(kWindowCenter.x, GetPlayButtonY()),
                    sf::Vector2f(kPlayButtonWidth, kPlayButtonHeight)),
       m_promptText(font, std::string(kPromptMessage), static_cast<unsigned int>(kPromptFontSize))
 {
@@ -90,17 +98,15 @@ void MenuScreen::Refresh()
 
 void MenuScreen::InitializeTitle()
 {
-    m_title.SetPosition({(static_cast<float>(kWindowWidth) - m_title.GetWidth()) / kHalf, kTitleY});
+    m_title.SetPosition({GetCenteredX(m_title.GetWidth()), kTitleY});
 }
 
 void MenuScreen::InitializeDifficultyButtons(const sf::Font& font)
 {
     float currentY = kButtonStartY;
-    const float centerX = static_cast<float>(kWindowWidth) / kHalf;
-
     for (const EDifficulty difficulty : sudoku::kAllDifficulties)
     {
-        Button button(font, std::string(sudoku::GetDifficultyName(difficulty)), sf::Vector2f(centerX, currentY),
+        Button button(font, std::string(sudoku::GetDifficultyName(difficulty)), sf::Vector2f(kWindowCenter.x, currentY),
                       sf::Vector2f(kButtonWidth, kButtonHeight));
         m_difficultyButtons.emplace_back(difficulty, std::move(button));
         currentY += kButtonHeight + kButtonSpacing;
@@ -112,7 +118,7 @@ void MenuScreen::InitializePromptText()
     m_promptText.setFillColor(kPromptTextColor);
 
     const sf::FloatRect bounds = m_promptText.getLocalBounds();
-    const float textX = (static_cast<float>(kWindowWidth) - bounds.size.x) / kHalf;
+    const float textX = GetCenteredX(bounds.size.x);
     const float centerY = GetPlayButtonY();
     const float textY = centerY + (kPlayButtonHeight / kHalf) + kPromptMargin;
 

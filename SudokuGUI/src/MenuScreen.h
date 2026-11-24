@@ -42,4 +42,4 @@ class MenuScreen : public IMenuListener
     Button m_playButton;
     sf::Text m_promptText;
 };
-} 
+}
