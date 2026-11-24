@@ -21,7 +21,7 @@ sf::Font LoadFont()
     }
     return font;
 }
-}
+} 
 
 Application::Application()
     : m_window(sf::VideoMode({kWindowWidth, kWindowHeight}), std::string(kWindowTitle),

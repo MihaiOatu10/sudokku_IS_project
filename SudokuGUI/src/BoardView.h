@@ -1,7 +1,7 @@
 #pragma once
 
-#include "SudokuLogic/IGame.h"
 #include "SudokuLogic/ECellState.h"
+#include "SudokuLogic/IGame.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -40,4 +40,4 @@ class BoardView
     sf::ConvexShape m_shadow;
     std::vector<sf::RectangleShape> m_gridLines;
 };
-}
+} 

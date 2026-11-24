@@ -26,6 +26,7 @@ class GameScreen
   private:
     sf::Vector2f GetBoardTopLeft() const;
     sf::Vector2f GetNumberPadTopLeft() const;
+    void DrawMistakes(sf::RenderTarget& target) const;
 
     const sf::Font& m_font;
     BoardView m_boardView;
@@ -34,4 +35,4 @@ class GameScreen
     std::optional<TitleText> m_difficultyTitle;
     IGame* m_game = nullptr;
 };
-}
+} 

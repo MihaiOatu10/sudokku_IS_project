@@ -1,6 +1,9 @@
 #include "NumberPad.h"
-#include "SudokuLogic/BoardConstants.h"
+
 #include "Theme.h"
+
+#include "SudokuLogic/BoardConstants.h"
+
 #include <string>
 #include <utility>
 

@@ -1,10 +1,11 @@
 #pragma once
 #include "Button.h"
+
 #include <SFML/Graphics.hpp>
-#include <vector>
 
 #include <optional>
 #include <utility>
+#include <vector>
 
 namespace sudoku::gui
 {

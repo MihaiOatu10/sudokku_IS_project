@@ -4,6 +4,8 @@
 
 #include "SudokuLogic/EDifficulty.h"
 
+#include <string>
+
 namespace sudoku::gui
 {
 GameScreen::GameScreen(const sf::Font& font)
@@ -27,6 +29,7 @@ void GameScreen::Draw(sf::RenderTarget& target) const
     if (m_game)
     {
         m_boardView.DrawDigits(target, *m_game);
+        DrawMistakes(target);
     }
     m_numberPad.Draw(target);
     m_title.Draw(target);
@@ -74,4 +77,18 @@ sf::Vector2f GameScreen::GetBoardTopLeft() const
             (static_cast<float>(kWindowHeight) - kBoardPixelSize) / kHalf};
 }
 
+void GameScreen::DrawMistakes(sf::RenderTarget& target) const
+{
+    const std::string label =
+        std::string(kMistakesPrefix) + std::to_string(m_game->GetMistakeCount()) + "/" + std::to_string(kMaxMistakes);
+    sf::Text text(m_font, label, kMistakesFontSize);
+    text.setFillColor(kInkColor);
+
+    const sf::FloatRect bounds = text.getLocalBounds();
+    text.setOrigin({bounds.getCenter().x, bounds.position.y});
+
+    const sf::Vector2f padTopLeft = GetNumberPadTopLeft();
+    text.setPosition({padTopLeft.x + kPadWidth / kHalf, padTopLeft.y + kPadHeight + kMistakesPadSpacing});
+    target.draw(text);
 }
+} 

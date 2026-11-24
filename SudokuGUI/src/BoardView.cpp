@@ -28,7 +28,7 @@ sf::Color GetDigitColor(ECellState state)
         return kInkColor;
     }
 }
-}
+} 
 
 BoardView::BoardView(const sf::Font& font, sf::Vector2f topLeft)
     : m_font(font), m_topLeft(topLeft), m_background(CreateRoundedRectangle(kBoardDimensions, kBoardCornerRadius)),
@@ -163,4 +163,4 @@ sf::Vector2f BoardView::GetCellCenter(std::size_t row, std::size_t column) const
     constexpr float kHalfCell = kBoardCellSize / kHalf;
     return GetCellTopLeft(row, column) + sf::Vector2f(kHalfCell, kHalfCell);
 }
-}
+} 

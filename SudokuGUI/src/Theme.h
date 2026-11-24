@@ -2,12 +2,12 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "SudokuLogic/BoardConstants.h"
+#include "SudokuLogic/EDifficulty.h"
+
 #include <array>
 #include <cstddef>
 #include <string_view>
-
-#include "SudokuLogic/BoardConstants.h"
-#include "SudokuLogic/EDifficulty.h"
 
 namespace sudoku::gui
 {
@@ -166,4 +166,8 @@ inline constexpr float kDifficultyTitleSpacing = 32.f;
 inline constexpr float kDifficultyTitleBoardSpacing = 15.f;
 
 inline constexpr sf::Color kSelectedCellColor{215, 235, 255};
+
+inline constexpr unsigned kMistakesFontSize = 28;
+inline constexpr float kMistakesPadSpacing = 25.f;
+inline constexpr std::string_view kMistakesPrefix = "Mistakes: ";
 }

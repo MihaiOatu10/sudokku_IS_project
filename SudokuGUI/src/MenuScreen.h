@@ -1,11 +1,14 @@
 #pragma once
 #include "Button.h"
+#include "TitleText.h"
+
 #include "SudokuLogic/EDifficulty.h"
 #include "SudokuLogic/EScreen.h"
 #include "SudokuLogic/IMenu.h"
 #include "SudokuLogic/IMenuListener.h"
-#include "TitleText.h"
+
 #include <SFML/Graphics.hpp>
+
 #include <string>
 #include <utility>
 #include <vector>
@@ -39,4 +42,4 @@ class MenuScreen : public IMenuListener
     sf::Text m_promptText;
     bool m_isPlayUnlocked;
 };
-}
+} 
