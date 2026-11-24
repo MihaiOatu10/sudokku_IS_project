@@ -1,30 +1,11 @@
-#include "Game.h"
-#include "mocks/MockPuzzleGenerator.h"
+#include "helpers/GameCreationTests.h"
 
-#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <stdexcept>
 
 namespace sudoku::test
 {
-
-using ::testing::Return;
-using ::testing::StrictMock;
-
-class GameCreationTests : public ::testing::Test
-{
-protected:
-    static constexpr EDifficulty kDifficulty = EDifficulty::Hard;
-
-    std::unique_ptr<IGame> CreateGame(const Board& puzzle)
-    {
-        EXPECT_CALL(m_generator, Generate(kDifficulty)).Times(1).WillOnce(Return(puzzle));
-        return std::make_unique<Game>(kDifficulty, m_generator);
-    }
-
-    StrictMock<MockPuzzleGenerator> m_generator;
-};
 
 TEST_F(GameCreationTests, PuzzleWithoutASolutionCannotStartAGame)
 {

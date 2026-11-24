@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Board.h"
+#include "Solver.h"
 
 #include <algorithm>
 #include <array>
@@ -8,6 +9,8 @@
 
 namespace sudoku::test
 {
+
+constexpr std::size_t kSolutionLimit = 2;
 
 inline std::array<int, kCellCount> GetValues(const Board& board)
 {
@@ -37,6 +40,12 @@ inline bool FollowsTheRules(const Board& board)
         }
     }
     return true;
+}
+
+inline Board GetSolution(Board puzzle)
+{
+    Solver().FillBoard(puzzle);
+    return puzzle;
 }
 
 }

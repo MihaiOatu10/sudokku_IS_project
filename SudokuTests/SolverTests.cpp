@@ -68,12 +68,12 @@ TEST_F(SolverTests, DifferentSeedsFillDifferentBoards)
 
 TEST_F(SolverTests, FilledBoardHasOneSolution)
 {
-    EXPECT_EQ(Solver().CountSolutions(CreateFilledBoard(kSeed), 2), 1u);
+    EXPECT_EQ(Solver().CountSolutions(CreateFilledBoard(kSeed), kSolutionLimit), 1u);
 }
 
 TEST_F(SolverTests, EmptyBoardReachesTheSolutionLimit)
 {
-    EXPECT_EQ(Solver().CountSolutions(Board(), 2), 2u);
+    EXPECT_EQ(Solver().CountSolutions(Board(), kSolutionLimit), kSolutionLimit);
 }
 
 TEST_F(SolverTests, FillBoardKeepsTheExistingValues)
@@ -100,7 +100,7 @@ TEST_F(SolverTests, UnsolvableBoardCannotBeFilled)
 
 TEST_F(SolverTests, UnsolvableBoardHasNoSolution)
 {
-    EXPECT_EQ(Solver().CountSolutions(CreateUnsolvableBoard(), 2), 0u);
+    EXPECT_EQ(Solver().CountSolutions(CreateUnsolvableBoard(), kSolutionLimit), 0u);
 }
 
 TEST_F(SolverTests, FullBoardWithConflictingValuesIsNotASolution)
@@ -108,7 +108,7 @@ TEST_F(SolverTests, FullBoardWithConflictingValuesIsNotASolution)
     Board board = CreateFilledBoard(kSeed);
     board.SetValue(0, 1, board.GetValue(0, 0));
 
-    EXPECT_EQ(Solver().CountSolutions(board, 2), 0u);
+    EXPECT_EQ(Solver().CountSolutions(board, kSolutionLimit), 0u);
     EXPECT_FALSE(Solver(kSeed).FillBoard(board));
 }
 
@@ -137,7 +137,7 @@ protected:
 
 TEST_P(SolverConflictTests, BoardHasNoSolution)
 {
-    EXPECT_EQ(Solver().CountSolutions(m_board, 2), 0u);
+    EXPECT_EQ(Solver().CountSolutions(m_board, kSolutionLimit), 0u);
 }
 
 TEST_P(SolverConflictTests, BoardCannotBeFilled)

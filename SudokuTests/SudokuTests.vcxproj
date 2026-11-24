@@ -54,6 +54,7 @@
     <ClCompile Include="SolverTests.cpp" />
     <ClCompile Include="PuzzleGeneratorTests.cpp" />
     <ClCompile Include="GameTests.cpp" />
+    <ClCompile Include="GameMoveTests.cpp" />
     <ClCompile Include="ButtonTests.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +64,7 @@
     <ClInclude Include="mocks\MockMenuListener.h" />
     <ClInclude Include="mocks\MockPuzzleGenerator.h" />
     <ClInclude Include="helpers\BoardHelpers.h" />
+    <ClInclude Include="helpers\GameCreationTests.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\external\googletest\googletest\src\gtest-all.cc" />

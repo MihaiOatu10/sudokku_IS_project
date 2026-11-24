@@ -69,7 +69,7 @@ TEST_F(PuzzleGeneratorTests, PuzzleHasOneSolution)
 {
     for (const auto& [difficulty, puzzle] : s_puzzles)
     {
-        EXPECT_EQ(Solver().CountSolutions(puzzle, 2), 1u);
+        EXPECT_EQ(Solver().CountSolutions(puzzle, kSolutionLimit), 1u);
     }
 }
 

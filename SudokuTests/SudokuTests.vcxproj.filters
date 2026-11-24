@@ -39,6 +39,9 @@
     <ClCompile Include="GameTests.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="GameMoveTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
     <ClCompile Include="ButtonTests.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
@@ -63,6 +66,9 @@
       <Filter>Mocks</Filter>
     </ClInclude>
     <ClInclude Include="helpers\BoardHelpers.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\GameCreationTests.h">
       <Filter>Helpers</Filter>
     </ClInclude>
   </ItemGroup>
