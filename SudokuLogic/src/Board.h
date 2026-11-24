@@ -17,6 +17,8 @@ public:
     bool IsEmpty(std::size_t row, std::size_t column) const;
     bool CanPlace(std::size_t row, std::size_t column, int value) const;
 
+    bool operator==(const Board& other) const = default;
+
 private:
     bool IsOtherCellHolding(std::size_t otherRow, std::size_t otherColumn, std::size_t row, std::size_t column,
                             int value) const;

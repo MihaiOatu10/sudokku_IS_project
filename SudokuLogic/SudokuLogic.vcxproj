@@ -42,6 +42,7 @@
     <ClInclude Include="src\IPuzzleGenerator.h" />
     <ClInclude Include="src\PuzzleGenerator.h" />
     <ClInclude Include="include\SudokuLogic\ECellState.h" />
+    <ClInclude Include="include\SudokuLogic\EGameState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EDifficulty.cpp" />
