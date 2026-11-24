@@ -3,6 +3,9 @@
 
 #include <gtest/gtest.h>
 
+#include <string>
+#include <string_view>
+
 namespace sudoku::test
 {
 
@@ -27,6 +30,16 @@ protected:
             board.SetValue(0, column, static_cast<int>(column) + kMinValue);
         }
         board.SetValue(1, kBoardSize - 1, kMaxValue);
+        return board;
+    }
+
+    static Board CreatePartiallyFilledBoard()
+    {
+        Board board = CreateFilledBoard(kOtherSeed);
+        for (std::size_t cellIndex = kBoxSize * kBoardSize; cellIndex < kCellCount; ++cellIndex)
+        {
+            board.ClearValue(cellIndex / kBoardSize, cellIndex % kBoardSize);
+        }
         return board;
     }
 };
@@ -71,6 +84,14 @@ TEST_F(SolverTests, FillBoardKeepsTheExistingValues)
     EXPECT_EQ(board.GetValue(4, 4), 5);
 }
 
+TEST_F(SolverTests, FillBoardCompletesAPartiallyFilledBoardFollowingTheRules)
+{
+    Board board = CreatePartiallyFilledBoard();
+    EXPECT_TRUE(Solver(kSeed).FillBoard(board));
+    EXPECT_EQ(CountFilledCells(board), kCellCount);
+    EXPECT_TRUE(FollowsTheRules(board));
+}
+
 TEST_F(SolverTests, UnsolvableBoardCannotBeFilled)
 {
     Board board = CreateUnsolvableBoard();
@@ -81,5 +102,55 @@ TEST_F(SolverTests, UnsolvableBoardHasNoSolution)
 {
     EXPECT_EQ(Solver().CountSolutions(CreateUnsolvableBoard(), 2), 0u);
 }
+
+TEST_F(SolverTests, FullBoardWithConflictingValuesIsNotASolution)
+{
+    Board board = CreateFilledBoard(kSeed);
+    board.SetValue(0, 1, board.GetValue(0, 0));
+
+    EXPECT_EQ(Solver().CountSolutions(board, 2), 0u);
+    EXPECT_FALSE(Solver(kSeed).FillBoard(board));
+}
+
+struct ConflictingCell
+{
+    std::string_view name;
+    std::size_t row;
+    std::size_t column;
+};
+
+class SolverConflictTests : public SolverTests, public ::testing::WithParamInterface<ConflictingCell>
+{
+protected:
+    static constexpr std::size_t kCellRow = 4;
+    static constexpr std::size_t kCellColumn = 4;
+    static constexpr int kValue = 5;
+
+    SolverConflictTests()
+    {
+        m_board.SetValue(kCellRow, kCellColumn, kValue);
+        m_board.SetValue(GetParam().row, GetParam().column, kValue);
+    }
+
+    Board m_board;
+};
+
+TEST_P(SolverConflictTests, BoardHasNoSolution)
+{
+    EXPECT_EQ(Solver().CountSolutions(m_board, 2), 0u);
+}
+
+TEST_P(SolverConflictTests, BoardCannotBeFilled)
+{
+    EXPECT_FALSE(Solver(kSeed).FillBoard(m_board));
+}
+
+INSTANTIATE_TEST_SUITE_P(SameValue, SolverConflictTests,
+                         ::testing::Values(ConflictingCell{"InTheSameRow", 4, 0},
+                                           ConflictingCell{"InTheSameColumn", 0, 4},
+                                           ConflictingCell{"InTheSameBox", 3, 3}),
+                         [](const ::testing::TestParamInfo<ConflictingCell>& info) {
+                             return std::string(info.param.name);
+                         });
 
 }
