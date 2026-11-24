@@ -1,19 +1,20 @@
 #include "MenuScreen.h"
 #include "Theme.h"
 
+#include <optional>
+
 namespace sudoku::gui
 {
 MenuScreen::MenuScreen(IMenu& menu, const sf::Font& font)
     : m_menu(menu), m_title(font, kTitleText, static_cast<unsigned int>(kTitleFontSize), kTitleSpacing),
       m_playButton(font, "Play", sf::Vector2f(static_cast<float>(kWindowWidth) / kHalf, GetPlayButtonY()),
                    sf::Vector2f(kPlayButtonWidth, kPlayButtonHeight)),
-      m_promptText(font, std::string(kPromptMessage), static_cast<unsigned int>(kPromptFontSize)),
-      m_isPlayUnlocked(m_menu.IsPlayUnlocked())
+      m_promptText(font, std::string(kPromptMessage), static_cast<unsigned int>(kPromptFontSize))
 {
     InitializeTitle();
     InitializeDifficultyButtons(font);
-    m_playButton.SetEnabled(m_isPlayUnlocked);
     InitializePromptText();
+    Refresh();
 
     m_menu.AddListener(this);
 }
@@ -59,27 +60,33 @@ void MenuScreen::Draw(sf::RenderTarget& target) const
 
     m_playButton.Draw(target);
 
-    if (!m_isPlayUnlocked)
+    if (!m_menu.IsPlayUnlocked())
     {
         target.draw(m_promptText);
     }
 }
 
-void MenuScreen::OnDifficultySelected(EDifficulty selectedDifficulty)
+void MenuScreen::OnDifficultySelected(EDifficulty)
 {
-    for (auto& [difficulty, button] : m_difficultyButtons)
-    {
-        button.SetSelected(difficulty == selectedDifficulty);
-    }
+    Refresh();
 }
 
 void MenuScreen::OnPlayUnlocked()
 {
-    m_isPlayUnlocked = true;
-    m_playButton.SetEnabled(true);
+    Refresh();
 }
 
 void MenuScreen::OnScreenChanged(EScreen) {}
+
+void MenuScreen::Refresh()
+{
+    const std::optional<EDifficulty> selectedDifficulty = m_menu.GetSelectedDifficulty();
+    for (auto& [difficulty, button] : m_difficultyButtons)
+    {
+        button.SetSelected(difficulty == selectedDifficulty);
+    }
+    m_playButton.SetEnabled(m_menu.IsPlayUnlocked());
+}
 
 void MenuScreen::InitializeTitle()
 {

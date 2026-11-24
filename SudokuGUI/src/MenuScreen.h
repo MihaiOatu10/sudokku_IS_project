@@ -25,11 +25,12 @@ class MenuScreen : public IMenuListener
     void HandleClick(sf::Vector2f mousePosition);
     void Draw(sf::RenderTarget& target) const;
 
-    void OnDifficultySelected(EDifficulty selectedDifficulty) override;
+    void OnDifficultySelected(EDifficulty difficulty) override;
     void OnPlayUnlocked() override;
     void OnScreenChanged(EScreen screen) override;
 
   private:
+    void Refresh();
     void InitializeTitle();
     void InitializeDifficultyButtons(const sf::Font& font);
     void InitializePromptText();
@@ -40,6 +41,5 @@ class MenuScreen : public IMenuListener
     std::vector<std::pair<EDifficulty, Button>> m_difficultyButtons;
     Button m_playButton;
     sf::Text m_promptText;
-    bool m_isPlayUnlocked;
 };
 } 

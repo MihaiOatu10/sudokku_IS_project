@@ -4,11 +4,7 @@
 #include "GameScreen.h"
 #include "MenuScreen.h"
 
-#include "SudokuLogic/EDifficulty.h"
-#include "SudokuLogic/EScreen.h"
-#include "SudokuLogic/IGame.h"
 #include "SudokuLogic/IMenu.h"
-#include "SudokuLogic/IMenuListener.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -16,17 +12,12 @@
 
 namespace sudoku::gui
 {
-class Application : public IMenuListener
+class Application
 {
   public:
     Application();
-    ~Application() override;
 
     void Run();
-
-    void OnDifficultySelected(EDifficulty difficulty) override;
-    void OnPlayUnlocked() override;
-    void OnScreenChanged(EScreen screen) override;
 
   private:
     void ProcessEvents();
@@ -37,15 +28,12 @@ class Application : public IMenuListener
 
     bool IsMainMenuShown() const;
     bool IsGameShown() const;
-    void StartGame();
 
     sf::RenderWindow m_window;
     sf::Font m_font;
     Background m_background;
     std::unique_ptr<IMenu> m_menu;
     MenuScreen m_menuScreen;
-    EScreen m_currentScreen;
-    std::unique_ptr<IGame> m_game;
     GameScreen m_gameScreen;
 };
 }

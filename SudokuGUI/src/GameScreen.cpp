@@ -4,6 +4,7 @@
 
 #include "SudokuLogic/EDifficulty.h"
 
+#include <optional>
 #include <string>
 
 namespace sudoku::gui
@@ -15,28 +16,13 @@ GameScreen::GameScreen(const sf::Font& font)
     m_title.CenterAbove(GetNumberPadTopLeft(), kPadWidth, kTitlePadSpacing);
 }
 
-void GameScreen::ShowGame(IGame& game)
+void GameScreen::Draw(sf::RenderTarget& target, const IGame& game) const
 {
-    m_game = &game;
-    m_difficultyTitle.emplace(m_font, GetDifficultyName(game.GetDifficulty()), kDifficultyTitleFontSize,
-                              kDifficultyTitleSpacing);
-    m_difficultyTitle->CenterAbove(GetBoardTopLeft(), kBoardPixelSize, kDifficultyTitleBoardSpacing);
-}
-
-void GameScreen::Draw(sf::RenderTarget& target) const
-{
-    m_boardView.Draw(target, m_game);
-    if (m_game)
-    {
-        m_boardView.DrawDigits(target, *m_game);
-        DrawMistakes(target);
-    }
+    m_boardView.Draw(target, game);
+    DrawMistakes(target, game);
     m_numberPad.Draw(target);
     m_title.Draw(target);
-    if (m_difficultyTitle)
-    {
-        m_difficultyTitle->Draw(target);
-    }
+    DrawDifficultyTitle(target, game);
 }
 
 void GameScreen::HandleMouseMove(sf::Vector2f mousePosition)
@@ -44,21 +30,16 @@ void GameScreen::HandleMouseMove(sf::Vector2f mousePosition)
     m_numberPad.HandleMouseMove(mousePosition);
 }
 
-void GameScreen::HandleClick(sf::Vector2f mousePosition)
+void GameScreen::HandleClick(sf::Vector2f mousePosition, IGame& game)
 {
-    if (!m_game)
-    {
-        return;
-    }
-
     if (const std::optional<CellPosition> cell = m_boardView.FindCellAt(mousePosition))
     {
-        m_game->SelectCell(cell->row, cell->column);
+        game.SelectCell(cell->row, cell->column);
         return;
     }
     if (const std::optional<int> value = m_numberPad.FindValueAt(mousePosition))
     {
-        m_game->EnterValue(*value);
+        game.EnterValue(*value);
     }
 }
 
@@ -77,10 +58,18 @@ sf::Vector2f GameScreen::GetBoardTopLeft() const
             (static_cast<float>(kWindowHeight) - kBoardPixelSize) / kHalf};
 }
 
-void GameScreen::DrawMistakes(sf::RenderTarget& target) const
+void GameScreen::DrawDifficultyTitle(sf::RenderTarget& target, const IGame& game) const
+{
+    TitleText difficultyTitle(m_font, GetDifficultyName(game.GetDifficulty()), kDifficultyTitleFontSize,
+                              kDifficultyTitleSpacing);
+    difficultyTitle.CenterAbove(GetBoardTopLeft(), kBoardPixelSize, kDifficultyTitleBoardSpacing);
+    difficultyTitle.Draw(target);
+}
+
+void GameScreen::DrawMistakes(sf::RenderTarget& target, const IGame& game) const
 {
     const std::string label =
-        std::string(kMistakesPrefix) + std::to_string(m_game->GetMistakeCount()) + "/" + std::to_string(kMaxMistakes);
+        std::string(kMistakesPrefix) + std::to_string(game.GetMistakeCount()) + "/" + std::to_string(kMaxMistakes);
     sf::Text text(m_font, label, kMistakesFontSize);
     text.setFillColor(kInkColor);
 

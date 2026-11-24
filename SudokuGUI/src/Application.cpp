@@ -28,16 +28,9 @@ Application::Application()
                sf::Style::Titlebar | sf::Style::Close),
       m_font(LoadFont()),
       m_background(sf::Vector2f(static_cast<float>(kWindowWidth), static_cast<float>(kWindowHeight)), m_font),
-      m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font), m_currentScreen(m_menu->GetCurrentScreen()),
-      m_gameScreen(m_font)
+      m_menu(IMenu::Produce()), m_menuScreen(*m_menu, m_font), m_gameScreen(m_font)
 {
     m_window.setFramerateLimit(kFrameRateLimit);
-    m_menu->AddListener(this);
-}
-
-Application::~Application()
-{
-    m_menu->RemoveListener(this);
 }
 
 void Application::Run()
@@ -46,19 +39,6 @@ void Application::Run()
     {
         ProcessEvents();
         Render();
-    }
-}
-
-void Application::OnDifficultySelected(EDifficulty) {}
-
-void Application::OnPlayUnlocked() {}
-
-void Application::OnScreenChanged(EScreen screen)
-{
-    m_currentScreen = screen;
-    if (IsGameShown())
-    {
-        StartGame();
     }
 }
 
@@ -112,7 +92,7 @@ void Application::HandleClick(sf::Vector2f mousePosition)
     }
     else if (IsGameShown())
     {
-        m_gameScreen.HandleClick(mousePosition);
+        m_gameScreen.HandleClick(mousePosition, *m_menu->GetGame());
     }
 }
 
@@ -126,24 +106,18 @@ void Application::Render()
     }
     else if (IsGameShown())
     {
-        m_gameScreen.Draw(m_window);
+        m_gameScreen.Draw(m_window, *m_menu->GetGame());
     }
     m_window.display();
 }
 
 bool Application::IsMainMenuShown() const
 {
-    return m_currentScreen == EScreen::MainMenu;
+    return m_menu->GetCurrentScreen() == EScreen::MainMenu;
 }
 
 bool Application::IsGameShown() const
 {
-    return m_currentScreen == EScreen::Game;
-}
-
-void Application::StartGame()
-{
-    m_game = IGame::Produce(*m_menu->GetSelectedDifficulty());
-    m_gameScreen.ShowGame(*m_game);
+    return m_menu->GetCurrentScreen() == EScreen::Game;
 }
 }
