@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SudokuLogic/BoardConstants.h"
+#include "SudokuLogic/ECellState.h"
 #include "SudokuLogic/EDifficulty.h"
 
 #include <cstddef>
@@ -19,6 +20,7 @@ public:
     virtual EDifficulty GetDifficulty() const = 0;
     virtual int GetCellValue(std::size_t row, std::size_t column) const = 0;
     virtual bool IsCellGiven(std::size_t row, std::size_t column) const = 0;
+    virtual ECellState GetCellState(std::size_t row, std::size_t column) const = 0;
 };
 
 }

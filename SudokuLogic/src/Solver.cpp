@@ -13,14 +13,32 @@ Solver::Solver(unsigned seed) : m_random(std::mt19937(seed))
 bool Solver::FillBoard(Board& board)
 {
     std::size_t solutionCount = 0;
-    return Search(board, 1, solutionCount);
+    return !HasConflicts(board) && Search(board, 1, solutionCount);
 }
 
 std::size_t Solver::CountSolutions(Board board, std::size_t limit)
 {
     std::size_t solutionCount = 0;
-    Search(board, limit, solutionCount);
+    if (!HasConflicts(board))
+    {
+        Search(board, limit, solutionCount);
+    }
     return solutionCount;
+}
+
+bool Solver::HasConflicts(const Board& board) const
+{
+    for (std::size_t cellIndex = 0; cellIndex < kCellCount; ++cellIndex)
+    {
+        const std::size_t row = cellIndex / kBoardSize;
+        const std::size_t column = cellIndex % kBoardSize;
+
+        if (!board.IsEmpty(row, column) && !board.CanPlace(row, column, board.GetValue(row, column)))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool Solver::Search(Board& board, std::size_t limit, std::size_t& solutionCount)

@@ -45,6 +45,9 @@
     <ClInclude Include="src\PuzzleGenerator.h">
       <Filter>Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="include\SudokuLogic\ECellState.h">
+      <Filter>API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EDifficulty.cpp">

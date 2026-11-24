@@ -20,6 +20,7 @@ public:
     std::size_t CountSolutions(Board board, std::size_t limit);
 
 private:
+    bool HasConflicts(const Board& board) const;
     bool Search(Board& board, std::size_t limit, std::size_t& solutionCount);
     std::optional<std::size_t> FindEmptyCellWithFewestOptions(const Board& board) const;
     std::size_t CountOptions(const Board& board, std::size_t row, std::size_t column) const;
