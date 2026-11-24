@@ -12,6 +12,22 @@ namespace
 {
 constexpr sf::Vector2f kBoardDimensions{kBoardPixelSize, kBoardPixelSize};
 constexpr sf::Vector2f kShadowOffset{kBoardShadowOffset, kBoardShadowOffset};
+
+sf::Color GetDigitColor(ECellState state)
+{
+    switch (state)
+    {
+    case ECellState::Given:
+        return kGivenDigitColor;
+    case ECellState::Correct:
+        return kCorrectDigitColor;
+    case ECellState::Wrong:
+        return kWrongDigitColor;
+    case ECellState::Empty:
+    default:
+        return kInkColor;
+    }
+}
 }
 
 BoardView::BoardView(const sf::Font& font, sf::Vector2f topLeft)
@@ -121,14 +137,15 @@ void BoardView::DrawCell(sf::RenderTarget& target, const IGame& game, std::size_
     const int value = game.GetCellValue(row, column);
     if (value != kEmptyValue)
     {
-        target.draw(CreateDigit(value, game.IsCellGiven(row, column), GetCellCenter(row, column)));
+        target.draw(CreateDigit(value, game.GetCellState(row, column), GetCellCenter(row, column)));
     }
 }
 
-sf::Text BoardView::CreateDigit(int value, bool isGiven, sf::Vector2f center) const
+sf::Text BoardView::CreateDigit(int value, ECellState state, sf::Vector2f center) const
 {
+    const bool isGiven = (state == ECellState::Given);
     sf::Text digit(m_font, std::to_string(value), isGiven ? kGivenDigitCharacterSize : kEnteredDigitCharacterSize);
-    digit.setFillColor(isGiven ? kInkColor : kEnteredDigitColor);
+    digit.setFillColor(GetDigitColor(state));
     digit.setStyle(isGiven ? sf::Text::Bold : sf::Text::Regular);
     digit.setOrigin(digit.getLocalBounds().getCenter());
     digit.setPosition(center);

@@ -3,6 +3,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+#include <optional>
+#include <utility>
+
 namespace sudoku::gui
 {
 class NumberPad
@@ -12,8 +15,9 @@ class NumberPad
 
     void HandleMouseMove(sf::Vector2f mousePosition);
     void Draw(sf::RenderTarget& target) const;
+    std::optional<int> FindValueAt(sf::Vector2f position) const;
 
   private:
-    std::vector<Button> m_buttons;
+    std::vector<std::pair<int, Button>> m_buttons;
 };
 }

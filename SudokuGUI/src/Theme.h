@@ -139,7 +139,10 @@ inline constexpr float kThickLineThickness = 5.f;
 
 inline constexpr unsigned kGivenDigitCharacterSize = 38;
 inline constexpr unsigned kEnteredDigitCharacterSize = 34;
-inline constexpr sf::Color kEnteredDigitColor{80, 130, 200};
+
+inline constexpr sf::Color kGivenDigitColor{60, 120, 210};
+inline constexpr sf::Color kCorrectDigitColor{35, 35, 45};
+inline constexpr sf::Color kWrongDigitColor{215, 65, 65};
 
 inline constexpr float kPadButtonSize = 65.f;
 inline constexpr float kPadButtonSpacing = 15.f;

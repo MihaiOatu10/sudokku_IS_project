@@ -19,19 +19,35 @@ NumberPad::NumberPad(const sf::Font& font, sf::Vector2f topLeft)
         const int column = index % kPadColumns;
         const sf::Vector2f position{topLeft.x + (static_cast<float>(column) * step) + halfSize,
                                     topLeft.y + (static_cast<float>(row) * step) + halfSize};
-        m_buttons.emplace_back(font, std::to_string(value), position, buttonSize);
+        m_buttons.emplace_back(value, Button(font, std::to_string(value), position, buttonSize));
     }
 }
 
 void NumberPad::HandleMouseMove(sf::Vector2f mousePosition)
 {
-    for (auto& button : m_buttons)
+    for (auto& [value, button] : m_buttons)
+    {
         button.UpdateHover(mousePosition);
+    }
+}
+
+std::optional<int> NumberPad::FindValueAt(sf::Vector2f position) const
+{
+    for (const auto& [value, button] : m_buttons)
+    {
+        if (button.Contains(position))
+        {
+            return value;
+        }
+    }
+    return std::nullopt;
 }
 
 void NumberPad::Draw(sf::RenderTarget& target) const
 {
-    for (const auto& button : m_buttons)
+    for (const auto& [value, button] : m_buttons)
+    {
         button.Draw(target);
+    }
 }
 }

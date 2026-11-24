@@ -51,6 +51,11 @@ void GameScreen::HandleClick(sf::Vector2f mousePosition)
     if (const std::optional<CellPosition> cell = m_boardView.FindCellAt(mousePosition))
     {
         m_game->SelectCell(cell->row, cell->column);
+        return;
+    }
+    if (const std::optional<int> value = m_numberPad.FindValueAt(mousePosition))
+    {
+        m_game->EnterValue(*value);
     }
 }
 

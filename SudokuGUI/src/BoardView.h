@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SudokuLogic/IGame.h"
+#include "SudokuLogic/ECellState.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -28,7 +29,7 @@ class BoardView
   private:
     void InitializeGrid();
     void DrawCell(sf::RenderTarget& target, const IGame& game, std::size_t row, std::size_t column) const;
-    sf::Text CreateDigit(int value, bool isGiven, sf::Vector2f center) const;
+    sf::Text CreateDigit(int value, ECellState state, sf::Vector2f center) const;
     sf::Vector2f GetCellTopLeft(std::size_t row, std::size_t column) const;
     sf::Vector2f GetCellCenter(std::size_t row, std::size_t column) const;
     void DrawSelectedCell(sf::RenderTarget& target, const IGame& game) const;
